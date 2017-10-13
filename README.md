@@ -1,2 +1,6 @@
-# evijvProject
-EVIJV Project UPMC 2017/2018
+# EVIJV Project
+2017 UPMC
+
+Tanguy SOTO
+
+Nicolas BILLOd
