@@ -1,7 +1,11 @@
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2008
 
+Project("{CDC54443-C7B5-A071-23A0-BE6C97A9BFB6}") = "TheMaze", "Assembly-CSharp-firstpass.csproj", "{475CD697-22E5-DC93-5318-D36697F216D1}"
+EndProject
 Project("{CDC54443-C7B5-A071-23A0-BE6C97A9BFB6}") = "TheMaze", "Assembly-CSharp.csproj", "{CB978BCD-7736-F556-8468-B6243BAE302C}"
+EndProject
+Project("{CDC54443-C7B5-A071-23A0-BE6C97A9BFB6}") = "TheMaze", "Assembly-CSharp-Editor.csproj", "{EF2BC9B0-26F9-661A-E250-4498BBAD2C33}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -9,10 +13,18 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{475CD697-22E5-DC93-5318-D36697F216D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{475CD697-22E5-DC93-5318-D36697F216D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{475CD697-22E5-DC93-5318-D36697F216D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{475CD697-22E5-DC93-5318-D36697F216D1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{CB978BCD-7736-F556-8468-B6243BAE302C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{CB978BCD-7736-F556-8468-B6243BAE302C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CB978BCD-7736-F556-8468-B6243BAE302C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CB978BCD-7736-F556-8468-B6243BAE302C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EF2BC9B0-26F9-661A-E250-4498BBAD2C33}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF2BC9B0-26F9-661A-E250-4498BBAD2C33}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF2BC9B0-26F9-661A-E250-4498BBAD2C33}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF2BC9B0-26F9-661A-E250-4498BBAD2C33}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

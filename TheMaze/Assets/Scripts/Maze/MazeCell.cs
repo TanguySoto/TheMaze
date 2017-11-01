@@ -20,6 +20,9 @@ public class MazeCell : MonoBehaviour {
 
 	private MazeCellEdge[] edges = new MazeCellEdge[MazeDirections.Count];
 
+	public MazeRoom room;
+	
+
 	// ============ LIFECYCLE
 
 	private void Start () {}
@@ -29,6 +32,10 @@ public class MazeCell : MonoBehaviour {
 
 	// ============ METHODS
 
+	public void Initialize (MazeRoom room) {
+		room.Add(this);
+		transform.GetChild(0).GetComponent<Renderer>().material = room.settings.floorMaterial;
+	}
 
 	public MazeCellEdge GetEdge (MazeDirection direction) {
 		return edges[(int)direction];

@@ -16,10 +16,12 @@ public class Maze : MonoBehaviour {
 
 	// ============ VARIABLES
 
+	public Vector3 scale;
 	public IntVector2 size;
-	public float generationStepDelay;
 	[Range(0f, 1f)]
 	public float doorProbability;
+	public bool openRoom = false;
+	public MazeRoomSettings[] roomSettings;
 	
 	public MazeWall[] wallPrefabs;
 	public MazeCell cellPrefab;
@@ -27,6 +29,7 @@ public class Maze : MonoBehaviour {
 	public MazeDoor doorPrefab;
 	
 	private MazeCell[,] cells;
+	public List<MazeRoom> rooms = new List<MazeRoom>();
 
 
 	// ============ LIFECYCLE
@@ -50,11 +53,16 @@ public class Maze : MonoBehaviour {
 			DoNextGenerationStep(activeCells);
 		}
 
+		// Scale it
+		gameObject.transform.localScale = scale;
+
 		MyDebug.Log(this,"Maze generated");
 	}
 
 	private void DoFirstGenerationStep (List<MazeCell> activeCells) {
-		activeCells.Add(CreateCell(RandomCoordinates()));
+		MazeCell newCell = CreateCell(RandomCoordinates());
+		newCell.Initialize(CreateRoom(-1));
+		activeCells.Add(newCell);
 	}
 
 	private void DoNextGenerationStep (List<MazeCell> activeCells) {
@@ -80,6 +88,9 @@ public class Maze : MonoBehaviour {
 				CreatePassage(currentCell, neighbor, direction);
 				activeCells.Add(neighbor);
 			}
+			else if(currentCell.room == neighbor.room && openRoom){
+				CreatePassageInSameRoom(currentCell,neighbor,direction);
+			}
 			// Already exists
 			else {
 				CreateWall(currentCell, neighbor, direction);
@@ -91,11 +102,42 @@ public class Maze : MonoBehaviour {
 		}
 	}
 
+	// Create a room, avoiding to recreate the same as indexToExclude
+	private MazeRoom CreateRoom (int indexToExclude) {
+		MazeRoom newRoom = ScriptableObject.CreateInstance<MazeRoom>();
+		newRoom.settingsIndex = Random.Range(0, roomSettings.Length);
+
+		if (newRoom.settingsIndex == indexToExclude) {
+			newRoom.settingsIndex = (newRoom.settingsIndex + 1) % roomSettings.Length;
+		}
+		newRoom.settings = roomSettings[newRoom.settingsIndex];
+		rooms.Add(newRoom);
+
+		return newRoom;
+	}
+
+	private void CreatePassageInSameRoom (MazeCell cell, MazeCell otherCell, MazeDirection direction) {
+		MazePassage passage = Instantiate(passagePrefab) as MazePassage;
+		passage.Initialize(cell, otherCell, direction);
+		passage = Instantiate(passagePrefab) as MazePassage;
+		passage.Initialize(otherCell, cell, direction.GetOpposite());
+	}
+
 	private void CreatePassage (MazeCell cell, MazeCell otherCell, MazeDirection direction) {
 		MazePassage prefab = Random.value < doorProbability ? doorPrefab : passagePrefab;
 		MazePassage passage = Instantiate(prefab) as MazePassage;
 		passage.Initialize(cell, otherCell, direction);
 		passage = Instantiate(prefab) as MazePassage;
+
+		// create room different from the one of cell ...
+		if (passage is MazeDoor) {
+			otherCell.Initialize(CreateRoom(cell.room.settingsIndex));
+		}
+		// or add next cell to same room
+		else {
+			otherCell.Initialize(cell.room);
+		}
+
 		passage.Initialize(otherCell, cell, direction.GetOpposite());
 	}
 
