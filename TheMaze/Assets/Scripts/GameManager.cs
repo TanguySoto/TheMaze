@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour {
 	public Maze mazePrefab;
 	private Maze mazeInstance;
 
+	public Player player;
 
 	// ============ LIFECYCLE
 
@@ -37,6 +38,7 @@ public class GameManager : MonoBehaviour {
 	private void BeginGame () {
 		mazeInstance = Instantiate(mazePrefab) as Maze;
 		mazeInstance.Generate();
+		player.SetLocation (mazeInstance.GetCell (mazeInstance.RandomCoordinates ()),true);
 	}
 
 	private void RestartGame () {

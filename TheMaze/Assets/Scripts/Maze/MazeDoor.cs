@@ -36,4 +36,18 @@ public class MazeDoor : MazePassage {
 			}
 		}
 	}
+
+	public override void OnPlayerEntered(){
+		OtherSideOfDoor ().cell.room.Show ();
+
+		OtherSideOfDoor ().hinge.gameObject.SetActive (false);
+		hinge.gameObject.SetActive (false);
+	}
+
+	public override void OnPlayerExited(){
+		hinge.gameObject.SetActive (true);
+		OtherSideOfDoor ().hinge.gameObject.SetActive (false);
+
+		//OtherSideOfDoor ().cell.room.Hide ();
+	}
 }
