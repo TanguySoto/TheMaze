@@ -4,12 +4,11 @@ using System.Collections;
 
 public class PointerManager : MonoBehaviour {
 
-	[Range(0,10)]
+	[Range(0,20)]
 	public float maxInteractionDistance;
 
 	public Text pointedName;
-	public GameObject origin;
-	public GameObject direction;
+	public Camera fpsCamera;
 
 	private GameObject targetedObject;
 
@@ -26,7 +25,8 @@ public class PointerManager : MonoBehaviour {
 	public void GetPointedObject(){
 		RaycastHit hit;
 
-		if (Physics.Raycast (origin.transform.position, direction.transform.forward, out hit)) {
+		Vector3 rayOrigin = fpsCamera.ViewportToWorldPoint (new Vector3(0.5f, 0.5f, 1.0f));
+		if (Physics.Raycast (rayOrigin, fpsCamera.transform.forward, out hit)) {
 			float distance = hit.distance;
 			if (distance < maxInteractionDistance) {
 				pointedName.text = hit.collider.gameObject.name + "";
