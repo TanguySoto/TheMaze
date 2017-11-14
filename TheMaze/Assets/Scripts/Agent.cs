@@ -8,11 +8,12 @@ public class Agent : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		a = GetComponentInChildren<NavMeshAgent> ();
-		a.SetDestination (new Vector3 (5, 0, 5));
+		a.destination = GameObject.Find ("Player").transform.position;
+
 	}
 	
 	// Update is called once per frame
 	void Update () {
-	
+		Debug.Log (a.destination);
 	}
 }

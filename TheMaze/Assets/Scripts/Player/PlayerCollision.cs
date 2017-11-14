@@ -46,7 +46,7 @@ public class PlayerCollision : MonoBehaviour{
 			}
 
 			// notify collision entered
-			if (c.transform.parent.gameObject.GetComponent<MazeCell>()!=null) {
+			if (c.transform.parent!=null && c.transform.parent.gameObject.GetComponent<MazeCell>()!=null) {
 				MazeCell mc = c.transform.parent.gameObject.GetComponent<MazeCell> ();
 				p.SetLocation (mc,false);
 			}

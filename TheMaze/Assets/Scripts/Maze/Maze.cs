@@ -27,8 +27,9 @@ public class Maze : MonoBehaviour {
 	public MazeCell cellPrefab;
 	public MazePassage passagePrefab;
 	public MazeDoor doorPrefab;
+	public MazeRoom roomPrefab;
 	
-	private MazeCell[,] cells;
+	public MazeCell[,] cells;
 	public List<MazeRoom> rooms = new List<MazeRoom>();
 
 
@@ -109,7 +110,9 @@ public class Maze : MonoBehaviour {
 
 	// Create a room, avoiding to recreate the same as indexToExclude
 	private MazeRoom CreateRoom (int indexToExclude) {
-		MazeRoom newRoom = ScriptableObject.CreateInstance<MazeRoom>();
+		MazeRoom newRoom = Instantiate (roomPrefab) as MazeRoom;
+		newRoom.transform.parent = transform;
+		newRoom.transform.position = Vector3.zero;
 		newRoom.settingsIndex = Random.Range(0, roomSettings.Length);
 
 		if (newRoom.settingsIndex == indexToExclude) {

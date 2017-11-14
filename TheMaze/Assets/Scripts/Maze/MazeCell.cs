@@ -14,11 +14,11 @@ using System.Collections;
 public class MazeCell : MonoBehaviour {
 
 	// ============ VARIABLES
-	private int initializedEdgeCount;
+	public int initializedEdgeCount;
 
 	public IntVector2 coordinates;
 
-	private MazeCellEdge[] edges = new MazeCellEdge[MazeDirections.Count];
+	public MazeCellEdge[] edges = new MazeCellEdge[MazeDirections.Count];
 
 	public MazeRoom room;
 	

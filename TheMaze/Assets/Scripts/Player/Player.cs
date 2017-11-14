@@ -13,16 +13,21 @@ using System.Collections;
 public class Player : MonoBehaviour {
 
 	// ============ VARIABLES
+	[Range(0,100)]
+	public float health;
 
 	public MazeCell currentCell;
 
 	private  PlayerCollision pc;
+
 
 	// ============ LIFECYCLE
 
 	private void Start () {
 		pc = GetComponent<PlayerCollision> ();
 	}
+
+	public void Update(){}
 
 	void OnControllerCollisionHit(ControllerColliderHit hit){
 		pc.OnControllerColliderHit (hit);
@@ -34,7 +39,7 @@ public class Player : MonoBehaviour {
 		MazeCell previousCell = currentCell;
 		currentCell = cell;
 		if (movePlayer) {
-			transform.localPosition = currentCell.transform.position + Vector3.up * 5;
+			transform.localPosition = currentCell.transform.position + Vector3.up;
 		}
 			
 		if (previousCell != null) {
@@ -42,4 +47,7 @@ public class Player : MonoBehaviour {
 		}
 		currentCell.OnPlayerEntered ();
 	}
+
+
+
 }

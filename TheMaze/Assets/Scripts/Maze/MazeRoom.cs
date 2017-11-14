@@ -11,13 +11,13 @@ using System.Collections.Generic;
  * Inspired by : http://catlikecoding.com/unity/tutorials/maze/
  */
 
-public class MazeRoom : ScriptableObject {
+public class MazeRoom : MonoBehaviour {
 
 	public int settingsIndex;
 
 	public MazeRoomSettings settings;
 	
-	private List<MazeCell> cells = new List<MazeCell>();
+	public List<MazeCell> cells = new List<MazeCell>();
 	
 	public void Add (MazeCell cell) {
 		cell.room = this;

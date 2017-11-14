@@ -36,9 +36,9 @@ public class GameManager : MonoBehaviour {
 	// ============ METHODS
 
 	private void BeginGame () {
-		mazeInstance = Instantiate(mazePrefab) as Maze;
-		mazeInstance.Generate();
-		player.SetLocation (mazeInstance.GetCell (mazeInstance.RandomCoordinates ()),true);
+		//mazeInstance = Instantiate(mazePrefab) as Maze;
+		//mazeInstance.Generate();
+		//player.SetLocation (mazeInstance.GetCell (mazeInstance.RandomCoordinates ()),true);
 	}
 
 	private void RestartGame () {
