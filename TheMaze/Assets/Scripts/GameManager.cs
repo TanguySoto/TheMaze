@@ -15,6 +15,9 @@ public class GameManager : MonoBehaviour {
 
 	// ============ VARIABLES
 
+	public bool mustGenerateLevel;
+
+	public GameObject environment;
 	public Maze mazePrefab;
 	private Maze mazeInstance;
 
@@ -23,78 +26,83 @@ public class GameManager : MonoBehaviour {
 	// ============ LIFECYCLE
 
 	private void Start () {
-		//GenerateNewLaby();
-		//applyPatch();
+		if(mustGenerateLevel){
+			GenerateNewLevel();
+		}
 	}
 	
 	private void Update () {
 		if (Input.GetKeyDown(KeyCode.R)) {
-			RestartGame();
+			Destroy (GameObject.Find ("West"));
+			Destroy (GameObject.Find ("North"));
+			Destroy (GameObject.Find ("East"));
+			Destroy (GameObject.Find ("South"));
+			GenerateNewLevel ();
 		}
 	}
 
 
 	// ============ METHODS
 
-	private void GenerateNewLaby () {
+	private void GenerateNewLevel () {
+		// West
 		mazeInstance = Instantiate(mazePrefab) as Maze;
+		mazeInstance.transform.parent = environment.transform;
+		mazeInstance.transform.localPosition = new Vector3 (225, 14.3f, 75);
+		mazeInstance.doorProbability = 0.1f;
+		mazeInstance.openRoom = true;
 		mazeInstance.Generate();
-	}
-
-	private void applyPatch(){
-		Maze[] mazes = new Maze[4];
-		mazes [0] = GameObject.Find ("West").GetComponent<Maze> ();
-		mazes[1] = GameObject.Find ("North").GetComponent<Maze> ();
-		mazes[2] = GameObject.Find ("South").GetComponent<Maze> ();
-		mazes[3] = GameObject.Find ("East").GetComponent<Maze> ();
-
-		Material newMat = Resources.Load("Materials/Wall1",typeof(Material)) as Material;
-
-		// update every maze
-		foreach (Maze m in mazes) {
-			// update every room
-			foreach (MazeRoom room in m.rooms) {
-				// update wall and door material of room 1
-				if(room.settingsIndex==0){
-					foreach (MazeCell c in room.cells) {
-						MazeWall[] walls = c.transform.gameObject.GetComponentsInChildren<MazeWall> ();
-						foreach (MazeWall w in walls) {
-							if (w.wall) {
-								w.wall.gameObject.GetComponent<Renderer> ().material = newMat;
-							}
-						}
-						MazeDoor[] doors = c.transform.gameObject.GetComponentsInChildren<MazeDoor> ();
-						foreach (MazeDoor d in doors) {
-							foreach (Renderer r in d.GetComponentsInChildren<Renderer>()) {
-								if (r != d.hinge.GetComponentInChildren<Renderer> ()) {
-									r.material = newMat;
-								}
-							}
-						}
-					}
-				}
-
-				// update all door height
-				foreach (MazeCell c in room.cells) {
-					MazeDoor[] doors = c.transform.gameObject.GetComponentsInChildren<MazeDoor> ();
-					foreach (MazeDoor d in doors) {
-						d.GetComponentsInChildren<Transform> () [2].localScale = new Vector3 (1, 0.02f, 0.05f);
-						d.GetComponentsInChildren<Transform> () [2].localPosition = new Vector3 (0, 0.01f, 0.475f);
-						d.hinge.transform.localPosition = new Vector3 (d.hinge.transform.localPosition.x, 0.02f, d.hinge.transform.localPosition.z);
-
-						Transform left = d.GetComponentsInChildren<Transform> () [3];
-						left.localPosition = new Vector3 (left.localPosition.x, 0.37f, left.localPosition.z);
-						Transform right = d.GetComponentsInChildren<Transform> () [4];
-						right.localPosition = new Vector3 (right.localPosition.x, 0.37f, right.localPosition.z);
-					}
-				}
-
+		mazeInstance.name = "West";
+		for (int i = 0; i < mazeInstance.GetCell (new IntVector2 (0, 9)).transform.childCount; i++) {
+			GameObject c = mazeInstance.GetCell (new IntVector2 (0, 9)).transform.GetChild (i).gameObject;
+			if (c.GetComponent<MazeWall>()!=null) {
+				Destroy (c);
 			}
 		}
-	}
 
-	private void RestartGame () {
-		Destroy(mazeInstance.gameObject);
-		GenerateNewLaby();
+		// North
+		mazeInstance = Instantiate(mazePrefab) as Maze;
+		mazeInstance.transform.parent = environment.transform;
+		mazeInstance.transform.localPosition = new Vector3 (75, 14.3f, -75);
+		mazeInstance.doorProbability = 0;
+		mazeInstance.openRoom = false;
+		mazeInstance.Generate();
+		mazeInstance.name = "North";
+		for (int i = 0; i < mazeInstance.GetCell (new IntVector2 (9, 19)).transform.childCount; i++) {
+			GameObject c = mazeInstance.GetCell (new IntVector2 (9, 19)).transform.GetChild (i).gameObject;
+			if (c.GetComponent<MazeWall>()!=null) {
+				Destroy (c);
+			}
+		}
+			
+		// East
+		mazeInstance = Instantiate(mazePrefab) as Maze;
+		mazeInstance.transform.parent = environment.transform;
+		mazeInstance.transform.localPosition = new Vector3 (-75, 14.3f, 75);
+		mazeInstance.doorProbability = 0.1f;
+		mazeInstance.openRoom = false;
+		mazeInstance.Generate();
+		mazeInstance.name = "East";
+		for (int i = 0; i < mazeInstance.GetCell (new IntVector2 (19, 9)).transform.childCount; i++) {
+			GameObject c = mazeInstance.GetCell (new IntVector2 (19, 9)).transform.GetChild (i).gameObject;
+			if (c.GetComponent<MazeWall>()!=null) {
+				Destroy (c);
+			}
+		}
+
+		// South
+		mazeInstance = Instantiate(mazePrefab) as Maze;
+		mazeInstance.transform.parent = environment.transform;
+		mazeInstance.transform.localPosition = new Vector3 (75, 14.3f, 225);
+		mazeInstance.doorProbability = 0.03f;
+		mazeInstance.openRoom = true;
+		mazeInstance.Generate();
+		mazeInstance.name = "South";
+		for (int i = 0; i < mazeInstance.GetCell (new IntVector2 (9, 0)).transform.childCount; i++) {
+			GameObject c = mazeInstance.GetCell (new IntVector2 (9, 0)).transform.GetChild (i).gameObject;
+			if (c.GetComponent<MazeWall>()!=null) {
+				Destroy (c);
+			}
+		}
 	}
 }

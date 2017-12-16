@@ -133,12 +133,19 @@ public class Maze : MonoBehaviour {
 
 	private void CreatePassage (MazeCell cell, MazeCell otherCell, MazeDirection direction) {
 		MazePassage prefab = Random.value < doorProbability ? doorPrefab : passagePrefab;
+
 		MazePassage passage = Instantiate(prefab) as MazePassage;
 		passage.Initialize(cell, otherCell, direction);
+		Vector3 localScale = new Vector3 (1,1,1);
+		if (passage is MazeDoor) {
+			passage.transform.localScale = localScale;
+		}
+
 		passage = Instantiate(prefab) as MazePassage;
 
 		// create room different from the one of cell ...
 		if (passage is MazeDoor) {
+			passage.transform.localScale = localScale;
 			otherCell.Initialize(CreateRoom(cell.room.settingsIndex));
 		}
 		// or add next cell to same room
@@ -153,8 +160,11 @@ public class Maze : MonoBehaviour {
 		MazeWall wall = Instantiate(wallPrefabs[Random.Range(0, wallPrefabs.Length)]) as MazeWall;
 		wall.Initialize(cell, otherCell, direction);
 		if (otherCell != null) {
+			Vector3 localScale = new Vector3 (1,1,1);
+			wall.transform.localScale = localScale;
 			wall = Instantiate(wallPrefabs[Random.Range(0, wallPrefabs.Length)]) as MazeWall;
 			wall.Initialize(otherCell, cell, direction.GetOpposite());
+			wall.transform.localScale = localScale;
 		}
 	}
 
