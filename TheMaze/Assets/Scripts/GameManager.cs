@@ -32,7 +32,7 @@ public class GameManager : MonoBehaviour {
 	}
 	
 	private void Update () {
-		if (Input.GetKeyDown(KeyCode.R)) {
+		if (Input.GetKeyDown(KeyCode.N)) {
 			Destroy (GameObject.Find ("West"));
 			Destroy (GameObject.Find ("North"));
 			Destroy (GameObject.Find ("East"));

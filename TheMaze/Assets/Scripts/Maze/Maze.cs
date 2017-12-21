@@ -62,7 +62,7 @@ public class Maze : MonoBehaviour {
 			//rooms[i].Hide();
 		}
 
-		MyDebug.Log(this,"Maze generated");
+		Debug.Log("Maze generated");
 	}
 
 	private void DoFirstGenerationStep (List<MazeCell> activeCells) {

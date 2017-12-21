@@ -34,9 +34,9 @@ public class PlayerCollision : MonoBehaviour{
 
 	public void Resolve()
 	{
-		//TODO - reimplement this so that we have all the hit information
+		//reimplement this so that we have all the hit information
 		var entered = _enteredColliders.Except(_stayedColliders).ToArray();
-		var stayed = _stayedColliders.Intersect(_enteredColliders).ToArray();
+		//var stayed = _stayedColliders.Intersect(_enteredColliders).ToArray();
 		var exited = _stayedColliders.Except(_enteredColliders).ToArray();
 
 		foreach (var c in entered)
@@ -52,10 +52,12 @@ public class PlayerCollision : MonoBehaviour{
 			}
 		}
 
+		/*
 		foreach (var c in stayed)
 		{
 			// notify collision stayed
 		}
+		*/
 			
 		foreach (var c in exited)
 		{

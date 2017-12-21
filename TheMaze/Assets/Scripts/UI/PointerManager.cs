@@ -7,10 +7,11 @@ public class PointerManager : MonoBehaviour {
 	[Range(0,20)]
 	public float maxInteractionDistance;
 
-	public Text pointedName;
 	public Camera fpsCamera;
 
-	private GameObject targetedObject;
+	public Text pointedName;
+	public GameObject targetedObject;
+	public RaycastHit hitPoint;
 
 	// Use this for initialization
 	void Start () {
@@ -29,14 +30,25 @@ public class PointerManager : MonoBehaviour {
 		if (Physics.Raycast (rayOrigin, fpsCamera.transform.forward, out hit)) {
 			float distance = hit.distance;
 			if (distance < maxInteractionDistance) {
+				hitPoint = hit;
 				pointedName.text = hit.collider.gameObject.name + "";
 				targetedObject = hit.collider.gameObject;
+
+				if (targetedObject.GetComponent<Activable> () != null) {
+					pointedName.color = Color.white;
+				} else {
+					pointedName.color = new Color (1, 0.8f, 0.3f);
+				}
 			} else {
 				pointedName.text = "-";
+				pointedName.color = new Color (1, 0.8f, 0.3f);
+				targetedObject = null;
 			}
 		}
 		else {
 			pointedName.text = "-";
+			pointedName.color = new Color (1, 0.8f, 0.3f);
+			targetedObject = null;
 		}
 	}
 }
