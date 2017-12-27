@@ -64,24 +64,40 @@ public class MazeCell : MonoBehaviour {
 	}
 
 	public void OnPlayerEntered () {
-		room.Show();
 		for (int i = 0; i < edges.Length; i++) {
-			edges [i].OnPlayerEntered ();
+			if (edges [i] != null) {
+				edges [i].OnPlayerEntered ();
+			}
 		}
+		room.Show();
 	}
 
 	public void OnPlayerExited () {
-		room.Hide();
 		for (int i = 0; i < edges.Length; i++) {
-			edges [i].OnPlayerExited ();
+			if (edges [i] != null) {
+				edges [i].OnPlayerExited ();
+			}
 		}
+		room.Hide();
 	}
 
 	public void Show () {
-		gameObject.SetActive(true);
+		// floor
+		this.transform.GetChild (0).GetComponent<Renderer> ().enabled = true;
+
+		// edges
+		for (int i = 0; i < edges.Length; i++) {
+			edges [i].show ();
+		}
 	}
 
 	public void Hide () {
-		gameObject.SetActive(false);
+		// floor
+		this.transform.GetChild (0).GetComponent<Renderer> ().enabled = false;
+
+		// edges
+		for (int i = 0; i < edges.Length; i++) {
+			edges [i].hide ();
+		}
 	}
 }

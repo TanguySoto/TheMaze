@@ -24,7 +24,7 @@ public class MazeDoor : MazePassage {
 		// Color all children
 		for (int i = 0; i < transform.childCount; i++) {
 			Transform child = transform.GetChild(i);
-			if (child != hinge) {
+			if (child != hinge && child.name!="Up") {
 				child.GetComponent<Renderer>().material = cell.room.settings.wallMaterial;
 			}
 		}
@@ -44,5 +44,29 @@ public class MazeDoor : MazePassage {
 		OtherSideOfDoor ().hinge.gameObject.SetActive (true);
 
 		//OtherSideOfDoor ().cell.room.Hide ();
+	}
+
+	public override void show(){
+		for (int i = 0; i < transform.childCount; i++) {
+			if (i == 3) {
+				if (transform.GetChild (i).gameObject.activeSelf) {
+					transform.GetChild (i).GetChild (0).GetComponent<Renderer> ().enabled = true;
+				}
+			} else {
+				transform.GetChild (i).GetComponent<Renderer> ().enabled = true;
+			}
+		}
+	}
+
+	public override void hide(){
+		for (int i = 0; i < transform.childCount; i++) {
+			if (i == 3 ) {
+				if(transform.GetChild(i).gameObject.activeSelf){
+					transform.GetChild (i).GetChild (0).GetComponent<Renderer> ().enabled = false;
+				}
+			} else {
+				transform.GetChild (i).GetComponent<Renderer> ().enabled = false;
+			}
+		}
 	}
 }

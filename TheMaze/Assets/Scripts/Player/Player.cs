@@ -13,6 +13,8 @@ using System.Collections;
 public class Player : MonoBehaviour {
 
 	// ============ VARIABLES
+	public GameObject mapCamera;
+
 	public GameObject leftTagPrefab;
 	public GameObject rightTagPrefab;
 	public GameObject warningTagPrefab;
@@ -37,21 +39,24 @@ public class Player : MonoBehaviour {
 	public void Update(){
 
 		// Keyboard events
-		if(Input.GetKeyDown(KeyCode.A)){
+		if (Input.GetKeyDown (KeyCode.A)) {
 			action ();
-		}
-		else if(Input.GetKeyDown(KeyCode.Alpha1)){
+		} else if (Input.GetKeyDown (KeyCode.Alpha1)) {
 			placeTagLeft ();
-		}
-		else if(Input.GetKeyDown(KeyCode.Alpha2)){
+		} else if (Input.GetKeyDown (KeyCode.Alpha2)) {
 			placeTagRight ();
-		}
-		else if(Input.GetKeyDown(KeyCode.Alpha3)){
+		} else if (Input.GetKeyDown (KeyCode.Alpha3)) {
 			placeTagWarning ();
-		}
-		else if(Input.GetKeyDown(KeyCode.R)){
+		} else if (Input.GetKeyDown (KeyCode.R)) {
 			removeTag ();
+		} else if (Input.GetKeyDown (KeyCode.Tab)) {
+			toggleMap ();
 		}
+
+		if (Input.GetKeyUp (KeyCode.Tab)) {
+			toggleMap ();
+		}
+
 	}
 
 	void OnControllerCollisionHit(ControllerColliderHit hit){
@@ -67,7 +72,7 @@ public class Player : MonoBehaviour {
 			transform.localPosition = currentCell.transform.position + Vector3.up;
 		}
 			
-		if (previousCell != null) {
+		if (previousCell != null){
 			previousCell.OnPlayerExited ();
 		}
 		currentCell.OnPlayerEntered ();
@@ -123,5 +128,9 @@ public class Player : MonoBehaviour {
 		if (target != null && target.name == "Tag") {
 			Destroy (target);
 		}
+	}
+
+	protected void toggleMap(){
+		mapCamera.SetActive (!mapCamera.activeSelf);
 	}
 }

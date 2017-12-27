@@ -5,7 +5,7 @@ using System.Collections;
 public class TimeManager : MonoBehaviour {
 
 	public Text text;
-	public Light light;
+	public Light mLight;
 
 	protected float DAYDURATION = 60;
 	protected float time;
@@ -36,12 +36,12 @@ public class TimeManager : MonoBehaviour {
 		// update UI
 		if (isDay) {
 			if (time >= DAYDURATION *3.0/ 4.0) {
-				light.intensity -= Time.deltaTime / (DAYDURATION/4.0f);
+				mLight.intensity -= Time.deltaTime / (DAYDURATION/4.0f);
 			}
 			text.text = "Day ";
 		} else {
 			if (time >= DAYDURATION *3.0/ 4.0) {
-				light.intensity += Time.deltaTime / (DAYDURATION/4.0f);
+				mLight.intensity += Time.deltaTime / (DAYDURATION/4.0f);
 			}
 			text.text = "Night";
 		}

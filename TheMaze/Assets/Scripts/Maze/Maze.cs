@@ -59,7 +59,7 @@ public class Maze : MonoBehaviour {
 
 		// Hide all rooms by default
 		for (int i = 0; i < rooms.Count; i++) {
-			//rooms[i].Hide();
+			rooms[i].Hide();
 		}
 
 		Debug.Log("Maze generated");
