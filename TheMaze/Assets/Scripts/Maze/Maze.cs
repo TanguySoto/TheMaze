@@ -57,7 +57,7 @@ public class Maze : MonoBehaviour {
 		// Scale it
 		gameObject.transform.localScale = scale;
 
-		// Hide all rooms by default
+		// Hide all rooms
 		for (int i = 0; i < rooms.Count; i++) {
 			rooms[i].Hide();
 		}

@@ -87,7 +87,9 @@ public class MazeCell : MonoBehaviour {
 
 		// edges
 		for (int i = 0; i < edges.Length; i++) {
-			edges [i].show ();
+			if (edges [i] != null) {
+				edges [i].show ();
+			}
 		}
 	}
 
@@ -97,7 +99,9 @@ public class MazeCell : MonoBehaviour {
 
 		// edges
 		for (int i = 0; i < edges.Length; i++) {
-			edges [i].hide ();
+			if (edges [i] != null) {
+				edges [i].hide ();
+			}
 		}
 	}
 }
