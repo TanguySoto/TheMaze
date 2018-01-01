@@ -191,6 +191,6 @@ public class Maze : MonoBehaviour {
 	}
 
 	public MazeCell GetCell (IntVector2 coordinates) {
-		return cells[coordinates.x, coordinates.z];
+			return cells[coordinates.x, coordinates.z];
 	}
 }
