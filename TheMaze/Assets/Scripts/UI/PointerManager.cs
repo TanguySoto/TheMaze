@@ -29,8 +29,8 @@ public class PointerManager : MonoBehaviour {
 		Vector3 rayOrigin = fpsCamera.ViewportToWorldPoint (new Vector3(0.5f, 0.5f, 1.0f));
 		if (Physics.Raycast (rayOrigin, fpsCamera.transform.forward, out hit)) {
 			float distance = hit.distance;
+			hitPoint = hit;
 			if (distance < maxInteractionDistance) {
-				hitPoint = hit;
 				pointedName.text = hit.collider.gameObject.name + "";
 				targetedObject = hit.collider.gameObject;
 

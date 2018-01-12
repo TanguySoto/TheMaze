@@ -61,12 +61,14 @@ public class TimeManager : MonoBehaviour {
 
 	protected void updateAgents(){
 		// Aggressivity
-		for (int i = 0; i < agents.transform.childCount; i++) {
-			if(isDay){
-				agents.transform.GetChild (i).GetComponent<SimpleAgent> ().agressivity = 0.4f;
-			}
-			else {
-				agents.transform.GetChild (i).GetComponent<SimpleAgent> ().agressivity = 1;
+		for(int j = 0; j < agents.transform.childCount; j++){
+			for (int i = 0; i < agents.transform.GetChild(j).childCount; i++) {
+				if(isDay){
+					agents.transform.GetChild (j).GetChild (i).GetComponent<SimpleAgent> ().agressivity = 0.6f;
+				}
+				else {
+					agents.transform.GetChild (j).GetChild(i).GetComponent<SimpleAgent> ().agressivity = 1;
+				}
 			}
 		}
 	}

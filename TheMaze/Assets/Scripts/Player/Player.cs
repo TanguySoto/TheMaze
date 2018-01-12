@@ -18,6 +18,7 @@ public class Player : MonoBehaviour {
 	public GameObject leftTagPrefab;
 	public GameObject rightTagPrefab;
 	public GameObject warningTagPrefab;
+	public GameObject arrowPrefab;
 
 	[Range(0,100)]
 	public float health;
@@ -27,6 +28,7 @@ public class Player : MonoBehaviour {
 
 	[Range(0.25f,3)]
 	public float TIME_BETWEEN_ATTACK;
+	public float time_last_attack;
 	public float FIGHTING_DISTANCE;
 	public float DAMAGE;
 	public float RANGE_DAMAGE;
@@ -48,6 +50,10 @@ public class Player : MonoBehaviour {
 		// Keyboard events
 		if (Input.GetMouseButtonDown (0)) {
 			action ();
+		}else if (Input.GetMouseButtonDown (1)) {
+			showArrow ();
+		} else if (Input.GetMouseButtonUp (1)) {
+			shootArrow ();
 		} else if (Input.GetKeyDown (KeyCode.Alpha1)) {
 			placeTagLeft ();
 		} else if (Input.GetKeyDown (KeyCode.Alpha2)) {
@@ -75,6 +81,11 @@ public class Player : MonoBehaviour {
 	public void SetLocation (MazeCell cell, bool movePlayer) {
 		MazeCell previousCell = currentCell;
 		currentCell = cell;
+
+		if (currentCell != previousCell) {
+			currentCell.playerStepsCounter++;
+		}
+
 		if (movePlayer) {
 			transform.localPosition = currentCell.transform.position + Vector3.up;
 		}
@@ -86,7 +97,7 @@ public class Player : MonoBehaviour {
 	}
 
 	public void onDie(){
-		health = 100;
+		health = 15;
 		this.transform.position = startPosition;
 		// tODO reset elevator
 	}
@@ -103,6 +114,28 @@ public class Player : MonoBehaviour {
 				Activable a = target.GetComponent<Activable> ();
 				a.action ();
 			}
+		}
+	}
+
+	protected void shootArrow(){
+		GameObject arrow = this.transform.GetChild (0).GetChild(0).gameObject;
+
+		if (arrow.activeSelf) {
+			arrow.GetComponent<Arrow> ().shoot ();
+
+			GameObject newArrow = Instantiate (arrowPrefab) as GameObject;
+			newArrow.transform.parent = this.transform.GetChild (0);
+			newArrow.transform.localPosition = new Vector3 (-0.67f, -0.24f, 0.84f);
+			newArrow.transform.localRotation = Quaternion.Euler (new Vector3 (87, 6, 0));
+
+			time_last_attack = Time.time;
+		}
+	}
+
+	protected void showArrow(){
+		if (time_last_attack == -1 || Time.time - time_last_attack >= TIME_BETWEEN_ATTACK) {
+			GameObject arrow = this.transform.GetChild (0).GetChild (0).gameObject;
+			arrow.SetActive (true);
 		}
 	}
 

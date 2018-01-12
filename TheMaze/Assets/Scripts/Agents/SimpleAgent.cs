@@ -36,6 +36,7 @@ public class SimpleAgent : Activable {
 
 	// Agent caracteristics
 	public float VIEW_ANGLE;
+	public float FIGHTING_ANGLE;
 	public float UNDETECTING_DISTANCE;
 	public float DETECTING_DISTANCE;
 	public float FIGHTING_DISTANCE;
@@ -43,9 +44,9 @@ public class SimpleAgent : Activable {
 	public float RANGE_DAMAGE;
 	public float TIME_BETWEEN_ATTACKS; // 1 attack every TIME_BETWEEN_ATTACKS seconds
 	public float TIME_BETWEEN_ANIMATIONS;
+	public float ROTATION_SPEED;
 
 	protected float time_last_attack = -1;
-	protected float time_last_attacked = -1;
 
 	// Materials
 	public Material greenMat;
@@ -56,6 +57,7 @@ public class SimpleAgent : Activable {
 	// Use this for initialization
 	void Start () {
 		player = GameObject.Find ("Player");
+		targetToKill = player;
 
 		mNavMeshAgent = GetComponent<NavMeshAgent> ();
 	}
@@ -87,7 +89,7 @@ public class SimpleAgent : Activable {
 
 	protected void getAttacked(){
 		Player p = targetToKill.GetComponent<Player> ();
-		if (time_last_attacked == -1 || Time.time - time_last_attacked >= p.TIME_BETWEEN_ATTACK) {
+		if (p.time_last_attack == -1 || Time.time - p.time_last_attack >= p.TIME_BETWEEN_ATTACK) {
 			Animation anim = targetToKill.transform.GetChild(1).GetChild(1).GetComponent<Animation> ();
 			anim ["SpearAnimation"].speed = (1.0f / (p.TIME_BETWEEN_ATTACK) + TIME_BETWEEN_ANIMATIONS);
 			anim.Play ("SpearAnimation");
@@ -103,14 +105,14 @@ public class SimpleAgent : Activable {
 
 				this.transform.GetChild (0).gameObject.GetComponent<Renderer> ().material = redMat;
 				state = STATES.FIGHTING;
-				time_last_attacked = Time.time;
+				p.time_last_attack = Time.time;
 			} else {
 				onDie ();
 			}
 		}
 	}
 
-	protected void onDie (){
+	public void onDie (){
 		Destroy (this.gameObject);
 	}
 
@@ -203,10 +205,14 @@ public class SimpleAgent : Activable {
 
 	protected void attack(){
 		// Must look at the player
-		Quaternion angle = Quaternion.LookRotation (targetToKill.transform.position - this.transform.position);
-		transform.rotation=Quaternion.Slerp (transform.rotation, angle, Time.deltaTime * 3);
+		Vector3 targetDirection = targetToKill.transform.position - this.transform.position;
+		Quaternion angle = Quaternion.LookRotation (targetDirection);
+		transform.rotation=Quaternion.Slerp (transform.rotation, angle, Time.deltaTime * ROTATION_SPEED);
 
-		if (time_last_attack == -1 || Time.time - time_last_attack >= TIME_BETWEEN_ATTACKS) {
+		// Check if player is in front of the agent
+		float diffAngle = Mathf.Abs(Vector3.Angle (targetDirection, this.transform.forward));
+
+		if ((time_last_attack == -1 || Time.time - time_last_attack >= TIME_BETWEEN_ATTACKS) && (diffAngle < FIGHTING_ANGLE)) {
 			// Animation
 			GameObject spear = this.transform.GetChild(2).gameObject; // 3rd child needs to be the spear
 			Animation anim = spear.GetComponent<Animation> ();

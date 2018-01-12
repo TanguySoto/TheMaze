@@ -21,6 +21,8 @@ public class MazeCell : MonoBehaviour {
 	public MazeCellEdge[] edges = new MazeCellEdge[MazeDirections.Count];
 
 	public MazeRoom room;
+
+	public int playerStepsCounter;
 	
 
 	// ============ LIFECYCLE
