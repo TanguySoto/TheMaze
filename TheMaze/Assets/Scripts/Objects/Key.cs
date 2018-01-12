@@ -7,6 +7,7 @@ public class Key : Activable {
 
 	// Use this for initialization
 	void Start () {
+		player = GameObject.Find ("Player");
 		LineRenderer l = this.GetComponent<LineRenderer> ();
 		l.SetPosition (0, this.transform.position +  new Vector3 (0, 0.4f, 0));
 		l.SetPosition (1, this.transform.position +  new Vector3 (0, 200, 0));

@@ -25,10 +25,17 @@ public class Player : MonoBehaviour {
 	[Range(0,4)]
 	public int keys;
 
+	[Range(0.25f,3)]
+	public float TIME_BETWEEN_ATTACK;
+	public float FIGHTING_DISTANCE;
+	public float DAMAGE;
+	public float RANGE_DAMAGE;
+
 	public MazeCell currentCell;
 
-	private  PlayerCollision pc;
+	public Vector3 startPosition;
 
+	private  PlayerCollision pc;
 
 	// ============ LIFECYCLE
 
@@ -39,7 +46,7 @@ public class Player : MonoBehaviour {
 	public void Update(){
 
 		// Keyboard events
-		if (Input.GetKeyDown (KeyCode.A)) {
+		if (Input.GetMouseButtonDown (0)) {
 			action ();
 		} else if (Input.GetKeyDown (KeyCode.Alpha1)) {
 			placeTagLeft ();
@@ -78,11 +85,24 @@ public class Player : MonoBehaviour {
 		currentCell.OnPlayerEntered ();
 	}
 
+	public void onDie(){
+		health = 100;
+		this.transform.position = startPosition;
+		// tODO reset elevator
+	}
+
 	protected void action(){
 		GameObject target = GameObject.Find ("Pointer").GetComponent<PointerManager> ().targetedObject;
 		if (target!=null && target.GetComponent<Activable>()!=null) {
-			Activable a = target.GetComponent<Activable>();
-			a.action ();
+			if (target.GetComponent<SimpleAgent>()!=null) {
+				if (Vector3.Distance (target.transform.position,this.transform.position) <= FIGHTING_DISTANCE) {
+					Activable a = target.GetComponent<Activable> ();
+					a.action ();
+				}
+			} else {
+				Activable a = target.GetComponent<Activable> ();
+				a.action ();
+			}
 		}
 	}
 

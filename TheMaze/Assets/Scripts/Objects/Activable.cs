@@ -3,7 +3,7 @@ using System.Collections;
 
 public abstract class Activable : MonoBehaviour {
 
-	public GameObject player;
+	protected GameObject player;
 
 	// Use this for initialization
 	void Start () {

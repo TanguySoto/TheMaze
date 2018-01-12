@@ -15,7 +15,7 @@ public class HealthDisplay : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		healthText.text = player.health+"%";
+		healthText.text = (int)player.health+"%";
 		healthBar.transform.localScale = new Vector3 (player.health/100.0f, 1, 1);
 	}
 }
