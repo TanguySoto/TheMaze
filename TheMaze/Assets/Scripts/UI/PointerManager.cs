@@ -37,7 +37,7 @@ public class PointerManager : MonoBehaviour {
 				if (targetedObject.GetComponent<Activable> () != null) {
 					pointedName.color = Color.white;
 				} else {
-					pointedName.color = new Color (1, 0.8f, 0.3f);
+					pointedName.color = Color.white;
 				}
 			} else {
 				pointedName.text = "-";
