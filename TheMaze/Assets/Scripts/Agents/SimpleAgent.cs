@@ -117,10 +117,29 @@ public class SimpleAgent : Activable {
 	}
 
 	protected void findPath(){
-		// Find a random target
+		// Select a random room
 		MazeRoom r = maze.rooms [Random.Range (0, maze.rooms.Count)];
-		MazeCell c = r.cells [Random.Range (0, r.cells.Count)];
-		walkingTarget = c;
+
+		float randomNumber = Random.Range (0.0f, 1.0f);
+
+		// Number of total steps
+		int nbSteps = 0;
+		foreach (MazeCell c in r.cells) {
+			nbSteps += c.playerStepsCounter + 1;
+		}
+
+
+		// Look for the cell to go to
+		float cpt = 0.0f;
+		foreach (MazeCell c in r.cells){	
+			if (randomNumber >= cpt && randomNumber <= cpt + ((c.playerStepsCounter + 1)*1.0f / nbSteps)){
+				walkingTarget = c;
+				break;
+			}
+			cpt += (c.playerStepsCounter + 1)*1.0f / nbSteps;
+		}
+
+		//walkingTarget = c;
 
 		state = STATES.WALKING;
 	}
