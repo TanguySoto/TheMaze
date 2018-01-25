@@ -1874,7 +1874,7 @@ function BOT_reqSay (success,emote,reason,arg1,arg2,arg3) {
 		break;
 	case "TELLWHY":
 		short += arg3;
-		long  += "Here is my best educated guess: "+ arg3;
+		long  += "Because "+ arg3;
 		break;
 	case "DONTKNOWWHY":
 		short += "Don't know why";

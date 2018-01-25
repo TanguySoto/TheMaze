@@ -1,0 +1,67 @@
+<!DOCTYPE html >
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+		
+		<title>Visimmo</title>
+		<link rel="icon" href="picts/favicon.png" />
+
+		<link href="jps.css" rel="stylesheet" type="text/css">                <!-- *** JPSMODIFY **** -->
+		<script type="text/javascript" src="../litetalk.code.js"> </script>   <!-- first:  litetalk code        -->
+		<script type="text/javascript" src="visimmo.code.js">  </script>      <!-- second: Application: Visimmo   -->
+	</head>
+
+	<body>	
+		<div id="main_panel">
+		
+			<!-- ==== AGENTS ==== -->
+			<!----- MARC ----->
+			<div id="bot_div">
+				<textarea class="bottextarea" id="marcballoon" spellcheck="false">.</textarea> <br/>
+				<div id="margin2_div">
+			  </div>
+				<img id="marcpict" src="picts/marc.png" alt="Marc" onClick="BOT_standardSwitchToChar('marcBot');" />  
+			</div>
+			
+			<div id="margin_div">
+			</div>
+		
+			<!----- AURÉLIE ----->
+			<div id="bot_div">
+				<textarea class="bottextarea" id="aurelieballoon" spellcheck="false">.</textarea> <br/>
+				<div id="margin2_div">
+			  </div>
+				<img id="aureliepict" src="picts/aurelie.jpeg" alt="Aurélie" onClick="BOT_standardSwitchToChar('aurelieBot');"/>
+			</div>
+			
+			<div id="margin_div">
+			</div>
+		
+			<!----- JÉRÉMY ----->
+			<div id="bot_div">
+				<textarea  class="bottextarea" id="jeremyballoon" spellcheck="false">.</textarea> <br/>
+				<div id="margin2_div">
+			  </div>
+				<img id="jeremypict" src="picts/jeremy.png" alt="Jérémy" onClick="BOT_standardSwitchToChar('jeremyBot');"/>
+			</div>
+			
+			<div id="margin_div">
+			</div>
+				
+			<!-- ==== CHAT BAR ==== -->
+			<div id="chat_box">
+					<input id="litetalkchatbox" type="text" value="ask name" style="width:75%; height:30%" onKeyPress="BOT_chatboxOnKeypress(this,event);"> <br/>
+					<input type="submit" name="sendButton" id="sendButton" style="height:60%" value="SEND" onClick="BOT_chatboxOnSend('litetalkchatbox');">
+			</div>
+		</div>
+
+		<script type="text/javascript">
+			BOT_theInterface 	= "STANDARD";
+			BOT_traceFlag		= false; 
+			BOT_statusFlag		= false; 
+			BOT_standardFrameBot('marcBot','visible','4px solid yellow');	// shows marc pict and balloon							
+		</script> 
+	</body>
+
+</html>
