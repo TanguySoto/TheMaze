@@ -14,47 +14,74 @@
 
 	<body>	
 		<div id="main_panel">
+			<!-- ==== RIGHT Sub PANEL ==== -->
+			<div id="right_sub_panel">
+				<div id="goal_list">
+					<input id="goal1" type="checkbox" /> Mother convinced to buy<br />
+					<input id="goal2" type="checkbox" /> Father  convinced to buy<br />
+				</div>	
+				
+				<div class="margin_div">
+			  </div>
+				
+				<div id="room_div">
+					<strong>You are in:</strong></br>
+					<img id="room" src="picts/exterior.jpg" alt="Room">
+				</div>
+				
+				<div class="margin_div">
+			  </div>
+			  
+			  <div id="message_div">
+					Welcome ! You must convince this family to buy the house.
+				</div>
+			</div>
 		
 			<!-- ==== AGENTS ==== -->
 			<!----- MARC ----->
-			<div id="bot_div">
-				<textarea class="bottextarea" id="marcballoon" spellcheck="false">.</textarea> <br/>
-				<div id="margin2_div">
+			<div class="bot_div">
+				<textarea class="bottextarea" id="marcballoon" spellcheck="false"></textarea> <br/>
+				<div class="margin2_div">
 			  </div>
 				<img id="marcpict" src="picts/marc.png" alt="Marc" onClick="BOT_standardSwitchToChar('marcBot');" />  
 			</div>
 			
-			<div id="margin_div">
+			<div class="margin_div">
 			</div>
 		
 			<!----- AURÉLIE ----->
-			<div id="bot_div">
-				<textarea class="bottextarea" id="aurelieballoon" spellcheck="false">.</textarea> <br/>
-				<div id="margin2_div">
+			<div class="bot_div">
+				<textarea class="bottextarea" id="aurelieballoon" spellcheck="false"></textarea> <br/>
+				<div class="margin2_div">
 			  </div>
 				<img id="aureliepict" src="picts/aurelie.jpeg" alt="Aurélie" onClick="BOT_standardSwitchToChar('aurelieBot');"/>
 			</div>
 			
-			<div id="margin_div">
+			<div class="margin_div">
 			</div>
 		
 			<!----- JÉRÉMY ----->
-			<div id="bot_div">
-				<textarea  class="bottextarea" id="jeremyballoon" spellcheck="false">.</textarea> <br/>
-				<div id="margin2_div">
+			<div class="bot_div">
+				<textarea  class="bottextarea" id="jeremyballoon" spellcheck="false"></textarea> <br/>
+				<div class="margin2_div">
 			  </div>
 				<img id="jeremypict" src="picts/jeremy.png" alt="Jérémy" onClick="BOT_standardSwitchToChar('jeremyBot');"/>
 			</div>
 			
-			<div id="margin_div">
+			<div class="margin_div">
 			</div>
 				
 			<!-- ==== CHAT BAR ==== -->
 			<div id="chat_box">
-					<input id="litetalkchatbox" type="text" value="ask name" style="width:75%; height:30%" onKeyPress="BOT_chatboxOnKeypress(this,event);"> <br/>
-					<input type="submit" name="sendButton" id="sendButton" style="height:60%" value="SEND" onClick="BOT_chatboxOnSend('litetalkchatbox');">
+					<input id="litetalkchatbox" type="text" value="ask name" onKeyPress="BOT_chatboxOnKeypress(this,event);"> <br/>
+					<input type="submit" name="sendButton" id="sendButton" style="height:50%" value="SEND" onClick="BOT_chatboxOnSend('litetalkchatbox');">
 			</div>
 		</div>
+		
+		<div id="more_infos">	
+			<input type="button" value="+"  onClick="BOT_switchTraceBox(this)">
+			<textarea id="litetalktracebox" spellcheck="false" style="visibility:hidden;"></textarea>
+		</div>	
 
 		<script type="text/javascript">
 			BOT_theInterface 	= "STANDARD";
