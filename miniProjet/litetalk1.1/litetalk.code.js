@@ -414,8 +414,8 @@ function BOT_buildStatusText() {
 // the HTML prefix ('fifi') must be placed in the attribute _htmlprefix of the bot
 // They have a standard HTML balloon called _htmlprefix+"balloon"
 
-var BOT_standardFontNormal  = "'Segoe Print'";
-var BOT_standardFontSlanted = "'Segoe Script'"; // used to alternate when two outputs are the same
+var BOT_standardFontNormal  = "'Arial'";
+var BOT_standardFontSlanted = "'Arial'"; // used to alternate when two outputs are the same
 
 
 // frame the pict of a standard bot with 

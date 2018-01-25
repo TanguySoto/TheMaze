@@ -156,7 +156,7 @@ BOT_theBotId		= "marcBot";		// sets current bot id
 
 
 function BOT_onSwitchBot(oldbotid,newbotid) {
-	BOT_standardFrameBot(oldbotid, "visible", "4px solid grey");
-	BOT_standardFrameBot(newbotid, "visible","4px solid yellow");
+	BOT_standardFrameBot(oldbotid, "visible", "4px solid #899DA3");
+	BOT_standardFrameBot(newbotid, "visible","4px solid #FFB030");
 }
 
