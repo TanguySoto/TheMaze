@@ -160,3 +160,6 @@ function BOT_onSwitchBot(oldbotid,newbotid) {
 	BOT_standardFrameBot(newbotid, "visible","4px solid #FFB030");
 }
 
+
+
+
