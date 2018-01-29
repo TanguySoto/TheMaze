@@ -46,7 +46,7 @@ body {
 }
 
 textarea.bottextarea {
-	width: 75%;
+	width: 60%;
 	height: 35%;
 	box-sizing: border-box;
 	padding: 7px;

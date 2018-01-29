@@ -138,7 +138,7 @@ var daisieTopic = [
 	// FUNC
 	[["KEY", "action"],						["VAL", ["meeting"]]],
 	[["KEY", "meeting"],					["VAL", ""], ["CAT","ACT"],
-											["EFFECT","fix a meeting with me"]	
+											["EFFECT","fix a meeting with me"]
 											]
 ];
 

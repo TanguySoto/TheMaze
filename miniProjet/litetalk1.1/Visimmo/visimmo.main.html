@@ -7,70 +7,76 @@
 		<title>Visimmo</title>
 		<link rel="icon" href="picts/favicon.png" />
 
-		<link href="jps.css" rel="stylesheet" type="text/css">                <!-- *** JPSMODIFY **** -->
-		<script type="text/javascript" src="../litetalk.code.js"> </script>   <!-- first:  litetalk code        -->
-		<script type="text/javascript" src="visimmo.code.js">  </script>      <!-- second: Application: Visimmo   -->
-		<script type="text/javascript" src="visimmoBis.code.js">  </script>      <!-- third : Non-chatbot related code  -->
+		<link href="jps.css" rel="stylesheet" type="text/css">                <!-- CSS -->
+		<script type="text/javascript" src="litetalk.code.js"> </script>   		<!-- first:  Litetalk code -->
+		<script type="text/javascript" src="visimmo.code.js">  </script>      <!-- second: ChatBot code  -->
 	</head>
 
 	<body>
 		<div id="main_panel">
 			<!-- ==== RIGHT Sub PANEL ==== -->
 			<div id="right_sub_panel">
+				<!-- GOALS -->
 				<div id="goal_list">
-					Welcome, you must convince this family to buy the house :<br />
-					<input id="goal1" type="checkbox" /> Mother convinced to buy <br />
-					<input id="goal2" type="checkbox" /> Father  convinced to buy <br />
+					Welcome, you must convince this family to buy the house:<br />
+
+					<center> <input id="goal1" type="checkbox" /> Father  convinced to buy </center>
+					<div class="progress">
+				 		<div id="marcBar"></div>
+					</div>
+
+					<center> <input id="goal2" type="checkbox" /> Mother convinced to buy </center>
+					<div class="progress">
+				 		<div id="aurelieBar"></div>
+					</div>
 				</div>	
 				
-				<div class="margin_div">
-			  </div>
+				<div class="margin_div"></div>
 				
+				<!-- ROOMS -->
 				<div id="room_div">
-					<strong>Current step:</strong></br>
+					<div id="room_name">
+						<strong>Current step:</strong></br>
+					</div>
 					<img id="room" src="picts/exterior.jpg" alt="Room">
 				</div>
 				
-				<div class="margin_div">
-			  </div>
+				<div class="margin_div"></div>
 			  
-			  <div id="message_div">
-							  </div>
+			  <!-- MESSAGE -->
+			  <center>
+			  	<div id="message_div">
+			  	</div>
+			  </center>
 			</div>
 		
 			<!-- ==== AGENTS ==== -->
 			<!-- MARC -->
 			<div class="bot_div">
 				<textarea readonly class="bottextarea" id="marcballoon" spellcheck="false"></textarea> <br/>
-				<div class="margin2_div">
-			  </div>
-				<img id="marcpict" src="picts/marc.png" alt="Marc" onClick="BOT_standardSwitchToChar('marcBot');" />  
+				<div class="margin2_div"></div>
+				<img id="marcpict" src="picts/marc.png" alt="Marc" onClick="BOT_standardSwitchToChar('marcBot');" />
 			</div>
 			
-			<div class="margin_div">
-			</div>
+			<div class="margin_div"></div>
 		
 			<!-- AURÉLIE -->
 			<div class="bot_div">
 				<textarea readonly class="bottextarea" id="aurelieballoon" spellcheck="false"></textarea> <br/>
-				<div class="margin2_div">
-			  </div>
+				<div class="margin2_div"></div>
 				<img id="aureliepict" src="picts/aurelie.jpeg" alt="Aurélie" onClick="BOT_standardSwitchToChar('aurelieBot');"/>
 			</div>
 			
-			<div class="margin_div">
-			</div>
+			<div class="margin_div"></div>
 		
 			<!-- JÉRÉMY -->
 			<div class="bot_div">
 				<textarea  readonly class="bottextarea" id="jeremyballoon" spellcheck="false"></textarea> <br/>
-				<div class="margin2_div">
-			  </div>
+				<div class="margin2_div"></div>
 				<img id="jeremypict" src="picts/jeremy.png" alt="Jérémy" onClick="BOT_standardSwitchToChar('jeremyBot');"/>
 			</div>
 			
-			<div class="margin_div">
-			</div>
+			<div class="margin_div"></div>
 				
 			<!-- ==== CHAT BAR ==== -->
 			<div id="chat_box">
@@ -90,11 +96,7 @@
 			BOT_standardFrameBot('marcBot','visible','4px solid #FFB030');	// shows marc pict and balloon							
 		</script> 
 
-
-		<script type="text/javascript">
-			document.getElementById("goal1").disabled = true;
-			document.getElementById("goal2").disabled = true;
-		</script>
+		<script type="text/javascript" src="visimmoGame.code.js">  </script>   <!-- third: Game code  -->
 	</body>
 
 </html>
