@@ -9,7 +9,8 @@
 
 		<link href="jps.css" rel="stylesheet" type="text/css">                <!-- CSS -->
 		<script type="text/javascript" src="litetalk.code.js"> </script>   		<!-- first:  Litetalk code -->
-		<script type="text/javascript" src="visimmo.code.js">  </script>      <!-- second: ChatBot code  -->
+		<script type="text/javascript" src="visimmoGame.code.js">  </script>  <!-- second: Game code  -->
+		<script type="text/javascript" src="visimmo.code.js">  </script>      <!-- third: ChatBot code  -->
 	</head>
 
 	<body>
@@ -93,10 +94,10 @@
 			BOT_theInterface 	= "STANDARD";
 			BOT_traceFlag		= true; 
 			BOT_statusFlag		= true; 
-			BOT_standardFrameBot('marcBot','visible','4px solid #FFB030');	// shows marc pict and balloon							
-		</script> 
+			BOT_standardFrameBot('marcBot','visible','4px solid #FFB030');	// shows marc pict and balloon
 
-		<script type="text/javascript" src="visimmoGame.code.js">  </script>   <!-- third: Game code  -->
+			startGame();							
+		</script> 
 	</body>
 
 </html>

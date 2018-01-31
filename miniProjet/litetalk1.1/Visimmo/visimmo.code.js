@@ -149,7 +149,40 @@ var houseTopic = [
 	[["KEY", "name"],			["VAL", "House"], ["CAT","VAR"],
 												["WHY", "It is just a house"]],
 
-	[["KEY", "room"],		["VAL", ["bathroom","exterior","first bedroom","kitchen","livingroom","second bedroom"]], ["CAT","VAR"]],
+	[["KEY", "room"],			["VAL", ["bathroom","exterior","first bedroom","kitchen","livingroom","second bedroom"]],["CAT","VAR"]],["ONASK",function(){return onAskRoom()}],
+	 
+	[["KEY", "kitchen"], ["VAL", ["stove", "dishwasher", "fridge"]], ["CAT","VAR"], ["ONASK",function(){return onAskInRoom("kitchen")}]],
+	[["KEY", "livingroom"], ["VAL", ["freespace", "light", "table", "sofas","screen"]], ["CAT","VAR"], ["ONASK",function(){return onAskInRoom("livingroom")}]],
+	[["KEY", "exterior"], ["VAL", ["garden", "parking", "tree", "playground"]], ["CAT","VAR"], ["ONASK",function(){return onAskInRoom("exterior")}]],
+	[["KEY", "bathroom"], ["VAL", ["bathtub", "shower", "toilet"]], ["CAT","VAR"], ["ONASK",function(){return onAskInRoom("bathroom")}]],
+	[["KEY", "bedroom1"], ["VAL", ["wall", "bed", "storage"]], ["CAT","VAR"], ["ONASK",function(){return onAskInRoom("bedroom1")}]],
+	[["KEY", "bedroom2"], ["VAL", ["painting", "desk", "bookshelf", "space"]], ["CAT","VAR"], ["ONASK",function(){return onAskInRoom("bedroom2")}]],
+
+	[["KEY", "stove"], ["VAL", "You didn't tell us how it looks like."], ["CAT","VAR"]],
+	[["KEY", "dishwasher"], ["VAL", "You didn't tell us how it looks like."], ["CAT","VAR"]],
+	[["KEY", "fridge"], ["VAL", "You didn't tell us how it looks like."], ["CAT","VAR"]],
+	[["KEY", "freespace"], ["VAL", "You didn't tell us how it looks like."], ["CAT","VAR"]],
+	[["KEY", "light"], ["VAL", "You didn't tell us how it looks like."], ["CAT","VAR"]],
+	[["KEY", "table"], ["VAL", "You didn't tell us how it looks like."], ["CAT","VAR"]],
+	[["KEY", "sofas"], ["VAL", "You didn't tell us how it looks like."], ["CAT","VAR"]],
+	[["KEY", "screen"], ["VAL", "You didn't tell us how it looks like."], ["CAT","VAR"]],
+	[["KEY", "garden"], ["VAL", "You didn't tell us how it looks like."], ["CAT","VAR"]],
+	[["KEY", "parking"], ["VAL", "You didn't tell us how it looks like."], ["CAT","VAR"]],
+	[["KEY", "tree"], ["VAL", "You didn't tell us how it looks like."], ["CAT","VAR"]],
+	[["KEY", "playground"], ["VAL", "You didn't tell us how it looks like."], ["CAT","VAR"]],
+	[["KEY", "bathtub"], ["VAL", "You didn't tell us how it looks like."], ["CAT","VAR"]],
+	[["KEY", "shower"], ["VAL", "You didn't tell us how it looks like."], ["CAT","VAR"]],
+	[["KEY", "toilet"], ["VAL", "You didn't tell us how it looks like."], ["CAT","VAR"]],
+	[["KEY", "wall"], ["VAL", "You didn't tell us how it looks like."], ["CAT","VAR"]],
+	[["KEY", "bed"], ["VAL", "You didn't tell us how it looks like."], ["CAT","VAR"]],
+	[["KEY", "storage"], ["VAL", "You didn't tell us how it looks like."], ["CAT","VAR"]],
+	[["KEY", "painting"], ["VAL", "You didn't tell us how it looks like."], ["CAT","VAR"]],
+	[["KEY", "desk"], ["VAL", "You didn't tell us how it looks like."], ["CAT","VAR"]],
+	[["KEY", "bookshelf"], ["VAL", "You didn't tell us how it looks like."], ["CAT","VAR"]],
+	[["KEY", "space"], ["VAL", "You didn't tell us how it looks like."], ["CAT","VAR"]],
+
+	[["KEY", "price"], ["VAL", "You didn't tell us how much this house costs."], ["CAT","VAR"]],
+	[["KEY", "surface"], ["VAL", "Good question, you tell us !"], ["CAT","VAR"]],
 ];
 
 var userTopic = [
@@ -177,6 +210,41 @@ BOT_theUserTopicId	= "userTopic";	// sets topic of current user id
 function BOT_onSwitchBot(oldbotid,newbotid) {
 	BOT_standardFrameBot(oldbotid, "visible", "4px solid #899DA3");
 	BOT_standardFrameBot(newbotid, "visible","4px solid #FFB030");
+}
+
+// INTELLIGENT ON ASK
+function onAskRoom(){
+	var mess = "We've seen the ";
+
+	for(var i=0;i<=currentRoom;i++){
+		mess=mess + (roomNumberToName[i]+", ");
+	}
+	return mess;
+}
+
+function onAskInRoom(roomName){
+	var roomNumber = roomNameToNumber[roomName];
+	var mess = "";
+
+	if(roomNumber<currentRoom){
+		mess = "I remember seing ";
+		objects = BOT_get('houseTopic',roomName,'VAL');
+		for(var i in objects){
+			mess+= (objects[i]+", ");
+		}
+	}
+	else if(roomNumber == currentRoom){
+		mess = "I can see ";
+		objects = BOT_get('houseTopic',roomName,'VAL');
+		for(var i in objects){
+			mess+= (objects[i]+", ");
+		}
+	}
+	else {
+		mess = "We have not been there yet, did we ?";
+	}
+
+	return mess;
 }
 
 // ACTIONS

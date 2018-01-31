@@ -1,5 +1,5 @@
 // ========= GAME parameters =========
-var timeInRooms = 60;  // s
+var timeInRooms = 5;  // s
 var currentTime;       // s
 var timerInterval;
 
@@ -18,9 +18,18 @@ var roomNumberToName  = new Array(roomsCount);
 roomNumberToName[0]   = 'exterior';
 roomNumberToName[1]   = 'livingroom';
 roomNumberToName[2]   = 'kitchen';
-roomNumberToName[3]   = 'first bedroom';
-roomNumberToName[4]   = 'second bedroom';
+roomNumberToName[3]   = 'bedroom1';
+roomNumberToName[4]   = 'bedroom2';
 roomNumberToName[5]   = 'bathroom';
+
+var roomNameToNumber  = {};
+roomNameToNumber['exterior']        = 0;
+roomNameToNumber['livingroom']      = 1;
+roomNameToNumber['kitchen']         = 2;
+roomNameToNumber['bedroom1']        = 3;
+roomNameToNumber['bedroom2']        = 4;
+roomNameToNumber['bathroom']        = 5;
+
 
 var marcWidth;
 var marcBarInterval;
@@ -176,7 +185,3 @@ function endGame(){
     // Nothing
   }
 }
-
-
-// ========= MAIN =========
-startGame();
