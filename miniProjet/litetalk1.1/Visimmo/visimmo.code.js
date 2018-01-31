@@ -85,8 +85,8 @@ var aurelieTopic = [
 														["EFFECT","I will look at the elements in the room you talked about."]],
 	
 	// PREFS
-	[["KEY", "preference"],		["VAL", [["houseTopic","first bedroom"],["houseTopic","livingroom"]]], ["CAT","VAR"], ["ONASK",BOT_printPreferenceList]],  
-	[["KEY", "distaste"],			["VAL", [["houseTopic","kitchen"],["houseTopic","exterior"]]],  ["CAT","VAR"],["ONASK",BOT_printDistasteList]],
+	//[["KEY", "preference"],		["VAL", [["houseTopic","first bedroom"],["houseTopic","livingroom"]]], ["CAT","VAR"], ["ONASK",BOT_printPreferenceList]],
+	//[["KEY", "distaste"],			["VAL", [["houseTopic","kitchen"],["houseTopic","exterior"]]],  ["CAT","VAR"],["ONASK",BOT_printDistasteList]],
 ];
 
 
@@ -135,8 +135,8 @@ var jeremyTopic = [
 	[["KEY", ["joy","joyful"]],		["VAL",  0], ["CAT","VAR"], ["TYPE","INT"]], // de -10 à 10
 	
 	// PREFS
-	[["KEY", "preference"],		["VAL", [["houseTopic","second bedroom"],["houseTopic","exterior"]]], ["CAT","VAR"], ["ONASK",BOT_printPreferenceList]],  
-	[["KEY", "distaste"],			["VAL", [["houseTopic","kitchen"],["houseTopic","bathroom"]]],  ["CAT","VAR"],["ONASK",BOT_printDistasteList]],
+	//[["KEY", "preference"],		["VAL", [["houseTopic","second bedroom"],["houseTopic","exterior"]]], ["CAT","VAR"], ["ONASK",BOT_printPreferenceList]],
+	//[["KEY", "distaste"],			["VAL", [["houseTopic","kitchen"],["houseTopic","bathroom"]]],  ["CAT","VAR"],["ONASK",BOT_printDistasteList]],
 ];
 
 var houseTopic = [
@@ -253,7 +253,23 @@ function sentimentMarc(){
 }
 
 function lookMarc(){
-	return "TODO";
+    var roomName = roomNumberToName[currentRoom];
+    // If Marc likes the room
+    if (roomName in marcLikes){
+        if(marcRoomLooked[currentRoom] == false){ // to check if already looked
+            marcRoomLooked[currentRoom] = true;
+            move("marcBar", 5);
+        }
+        return "I would like to talk about "+Object.keys(marcLikes[roomName]); // lists the things to talk about
+    }
+    // If Marc doesn't like the room
+    else{
+        if(marcRoomLooked[currentRoom] == false){
+            marcRoomLooked[currentRoom] = true;
+            move("marcBar", -5);    // only called once at the moment, but can get out of this if
+        }
+        return "I don't really like this room.";
+    }
 }
 
 function sentimentAurelie(){
@@ -261,7 +277,23 @@ function sentimentAurelie(){
 }
 
 function lookAurelie(){
-	return "TODO";
+    var roomName = roomNumberToName[currentRoom];
+    // If Aurelie likes the room
+    if (roomName in aurelieLikes){
+        if(aurelieRoomLooked[currentRoom] == false){
+            aurelieRoomLooked[currentRoom] = true;
+            move("aurelieBar", 5);
+        }
+        return "I would like to talk about "+Object.keys(aurelieLikes[roomName]); // lists the things to talk about
+    }
+    // If Aurelie doesn't like the room
+    else{
+        if(aurelieRoomLooked[currentRoom] == false){
+            aurelieRoomLooked[currentRoom] = true;
+            move("aurelieBar", -5);     // only called once at the moment, but can get out of this if
+        }
+        return "I don't really like this room.";
+    }
 }
 
 function play(){

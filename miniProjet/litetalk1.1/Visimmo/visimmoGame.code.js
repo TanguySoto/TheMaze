@@ -31,10 +31,34 @@ roomNameToNumber['bedroom2']        = 4;
 roomNameToNumber['bathroom']        = 5;
 
 
+var aurelieLikes = {}
+aurelieLikes["bedroom1"] = {"wall": "???", "bed" : "???", "storage" : "???"}
+aurelieLikes["livingroom"] = {"freespace": "???", "light" : "???", "table" : "???", "sofas" : "???", "screen" : "???"}
+aurelieLikes["bathroom"] = {"bathtub": "???", "shower" : "???", "toilet" : "???"}
+
+
+var marcLikes = {}
+marcLikes["kitchen"] = {"stove": "induction", "dishwasher" : "new", "fridge" : "big"}
+marcLikes["exterior"] = {"garden": "???", "parking" : "???", "tree" : "???", "playground" : "???"}
+marcLikes["bedroom2"] = {"painting": "???", "desk" : "???", "bookshelf" : "???", "space" : "???"}
+
+
+var objects = {}
+objects["stove"] = {"induction": "I don't know... electric stove would be nice.", "electric": "I don't know... induction stove would be nice."}
+
+
+var marcRoomLooked  = new Array(roomsCount);
+marcRoomLooked.fill(false);
+var aurelieRoomLooked  = new Array(roomsCount);
+aurelieRoomLooked.fill(false);
+
+
 var marcWidth;
 var marcBarInterval;
 var aurelieWidth;
 var aurelieBarInterval;
+
+
 
 // ========= FUNCTIONS =========
 
