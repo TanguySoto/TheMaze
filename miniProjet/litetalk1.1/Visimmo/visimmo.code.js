@@ -21,6 +21,7 @@ var marcTopic = [
 																	
 	[["KEY", ["job"]],			        ["VAL", "Banker"], ["WHY","I work in a bank..."]],
 	[["KEY", ["home","location"]],	["VAL", "Normal Heights, San Diego."]],
+	[["KEY", "budget"],							["VAL", "US$255,000"]],
 	
 	// RELATIONS
 	[["KEY", "relative"],						["VAL", ["wife","son"]],
@@ -66,6 +67,7 @@ var aurelieTopic = [
 																	
 	[["KEY", ["job"]],			        ["VAL", "Barber."]],
 	[["KEY", ["home","location"]],	["VAL", "We live in Normal Heights, San Diego"]],
+	[["KEY", "budget"],							["VAL", "US$255,000"]],
 	
 	// RELATIONS
 	[["KEY", "relative"],						["VAL", ["husband","son"]],
@@ -240,14 +242,14 @@ function inspectMarc(topic, val){
                     var opinionMarc = marcLikes[roomName][val];
                     if (opinionUser == opinionMarc){
                     	if(!objects[val]["used"]){
-                        	move("marcBar", 5);
+                        	move("marcBar", 8);
                         	objects[val]["used"]=true;
                     	}
                         return "I like it!";
                     }
                     else{
                     	if(!objects[val]["used"]){
-                        	move("marcBar", -5);
+                        	move("marcBar", -6);
                         	return objects[val][opinionMarc]; // return something a tip about what to say
                         }
                         else {
@@ -283,7 +285,7 @@ function inspectAurelie(topic, val){
                     var opinionAurelie = aurelieLikes[roomName][val];
                     if (opinionUser == opinionAurelie){
                     	if(!objects[val]["used"]){
-                        	move("aurelieBar", 5);
+                        	move("aurelieBar", 6);
                         	objects[val]["used"]=true;
                     	}
                         return "I like it!";
@@ -363,7 +365,7 @@ function lookMarc(){
     else{
         if(marcRoomLooked[currentRoom] == false){
             marcRoomLooked[currentRoom] = true;
-            move("marcBar", -5);    // only called once at the moment, but can get out of this if
+            move("marcBar", -3);    // only called once at the moment, but can get out of this if
         }
         return "I don't really like this room.";
     }
@@ -387,7 +389,7 @@ function lookAurelie(){
     else{
         if(aurelieRoomLooked[currentRoom] == false){
             aurelieRoomLooked[currentRoom] = true;
-            move("aurelieBar", -5);     // only called once at the moment, but can get out of this if
+            move("aurelieBar", -3);     // only called once at the moment, but can get out of this if
         }
         return "I don't really like this room.";
     }

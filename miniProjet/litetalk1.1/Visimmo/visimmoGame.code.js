@@ -1,5 +1,5 @@
 // ========= GAME parameters =========
-var timeInRooms = 5;  // s
+var timeInRooms = 90;  // s
 var currentTime;       // s
 var timerInterval;
 
@@ -32,18 +32,35 @@ roomNameToNumber['bathroom']        = 5;
 
 
 var aurelieLikes = {}
-aurelieLikes["bedroom1"] = {"wall": "???", "bed" : "???", "storage" : "???"}
-aurelieLikes["livingroom"] = {"freespace": "???", "light" : "???", "table" : "???", "sofas" : "???", "screen" : "???"}
-aurelieLikes["bathroom"] = {"bathtub": "???", "shower" : "???", "toilet" : "???"}
+aurelieLikes["bedroom1"] = {"wall": "wallpaper", "bed" : "kingsized", "storage" : "beautiful"}
+aurelieLikes["livingroom"] = {"space": "open", "table" : "wooden", "sofas" : "leather", "screen" : "led"}
+aurelieLikes["bathroom"] = {"bathtub": "secured", "shower" : "glazed", "toilet" : "blue"}
 
 var marcLikes = {}
 marcLikes["kitchen"] = {"stove": "induction", "dishwasher" : "new", "fridge" : "big"}
-marcLikes["exterior"] = {"garden": "grass", "parking" : "???", "tree" : "???", "playground" : "???"}
-//marcLikes["bedroom2"] = {"painting": "???", "desk" : "???", "bookshelf" : "???", "space" : "???"}
+marcLikes["exterior"] = {"garden": "grass", "parking" : "inside", "playground" : "clean"}
 
 var objects = {}
-objects["stove"] = {"induction": "I don't know... induction stove would be nice.", "electric": "I don't know... electric stove would be nice."}
+objects["stove"] = {"induction": "I don't know... an induction stove would be nice.", "unused": "I don't know... an unused stove would be nice."}
+objects["dishwasher"] = {"new": "I don't know... a new dishwasher would be nice.", "ecological": "I don't know... an ecological dishwasher would be nice."}
+objects["fridge"] = {"big": "I don't know... a big fridge would be nice.", "white": "I don't know... a white fridge would be nice."}
+
+objects["space"] = {"open": "I don't know... an open space would be nice.", "partitionned": "I don't know... a partitionned space would be nice."}
+objects["table"] = {"large": "I don't know... a large table would be nice.", "wooden": "I don't know... a wooden table would be nice."}
+objects["sofas"] = {"three": "I don't know... three sofas would be nice.", "leather": "I don't know... leather sofas would be nice."}
+objects["screen"] = {"big": "I don't know... a big screen would be nice.", "led": "I don't know... a led screen would be nice."}
+
 objects["garden"] = {"grass": "I don't know... grass on the floor would be nice.", "big": "I don't know... a big garden would be nice."}
+objects["parking"] = {"two": "I don't know... two parking would be nice.", "inside": "I don't know... a parking inside would be nice."}
+objects["playground"] = {"flowered": "I don't know... a flowered playground would be nice.", "clean": "I don't know... a clean playground would be nice."}
+
+objects["bathtub"] = {"secured": "I don't know... a secured bathtub would be nice.", "big": "I don't know... a big bathtub would be nice."}
+objects["shower"] = {"italian": "I don't know... an italian shower would be nice.", "glazed": "I don't know... a glazed shower would be nice."}
+objects["toilet"] = {"japanese": "I don't know... japanese toilet would be nice.", "blue": "I don't know... blue toilet would be nice."}
+
+objects["wall"] = {"wallpaper": "I don't know... wallpaper on walls would be nice.", "painted": "I don't know... painted walls would be nice."}
+objects["bed"] = {"kingsized": "I don't know... a king-sized bed would be nice.", "waterbed": "I don't know... a water-bed would be nice."}
+objects["storage"] = {"convenient": "I don't know... convenient storages would be nice.", "beautiful": "I don't know... beautiful storages would be nice."}
 
 var jeremyLikes = {}
 jeremyLikes["exterior"]     = {"like":true, "used":false}
