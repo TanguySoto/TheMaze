@@ -1,5 +1,5 @@
 // ========= GAME parameters =========
-var timeInRooms = 5;  // s
+var timeInRooms = 500;  // s
 var currentTime;       // s
 var timerInterval;
 
@@ -36,16 +36,18 @@ aurelieLikes["bedroom1"] = {"wall": "???", "bed" : "???", "storage" : "???"}
 aurelieLikes["livingroom"] = {"freespace": "???", "light" : "???", "table" : "???", "sofas" : "???", "screen" : "???"}
 aurelieLikes["bathroom"] = {"bathtub": "???", "shower" : "???", "toilet" : "???"}
 
-
 var marcLikes = {}
 marcLikes["kitchen"] = {"stove": "induction", "dishwasher" : "new", "fridge" : "big"}
-marcLikes["exterior"] = {"garden": "???", "parking" : "???", "tree" : "???", "playground" : "???"}
-marcLikes["bedroom2"] = {"painting": "???", "desk" : "???", "bookshelf" : "???", "space" : "???"}
-
+marcLikes["exterior"] = {"garden": "grass", "parking" : "???", "tree" : "???", "playground" : "???"}
+//marcLikes["bedroom2"] = {"painting": "???", "desk" : "???", "bookshelf" : "???", "space" : "???"}
 
 var objects = {}
-objects["stove"] = {"induction": "I don't know... induction stove would be nice.", "electric": "I don't know... electric stove would be nice."}
+objects["stove"] = {"induction": "I don't know... induction stove would be nice.", "electric": "I don't know... electric stove would be nice.", "used": false}
+objects["garden"] = {"grass": "I don't know... grass on the floor would be nice.", "big": "I don't know... a big garden would be nice."}
 
+var jeremyLikes = {}
+marcLikes["exterior"] = true;
+marcLikes["bedroom2"] = true;
 
 var marcRoomLooked  = new Array(roomsCount);
 marcRoomLooked.fill(false);
@@ -128,6 +130,11 @@ function move(progressBar, diff) {
       marcWidth = Math.max(0,marcWidth);
     }
 
+    // if we were already at extremum -> no need to animate
+    if((width<=0 && sens==-1) || (width>=100 && sens==1)){
+      return;
+    }
+
     // Update animation
     var id;
     if(progressBar=="aurelieBar"){
@@ -141,8 +148,6 @@ function move(progressBar, diff) {
 
     var elem = document.getElementById(progressBar);
     function frame() {
-      console.log("$$$$"+width)
-      console.log(diff)
         if (width > 100 || width <0 || diff==0) {
             clearInterval(id);
         }

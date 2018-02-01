@@ -75,7 +75,7 @@ var aurelieTopic = [
 	[["KEY", "son"],								["VAL", "jeremyTopic"],["CAT","REL"]],
 
 	// FUNC
-	[["KEY", "action"],				["VAL", ["sentiment","look", "inspect"]],
+	[["KEY", "action"],				["VAL", ["sentiment","look"]],
 														["ONASK",BOT_printActionList]],
 
 	[["KEY", "sentiment"], 		["VAL", "sentimentAurelie"], ["CAT", "ACT"],
@@ -83,9 +83,6 @@ var aurelieTopic = [
 
 	[["KEY", "look"], 				["VAL", "lookAurelie"], ["CAT", "ACT"],
 														["EFFECT","I will look at the elements in the room."]],
-                    
-    [["KEY", "inspect"],            ["VAL", "inspectAurelie"], ["CAT", "ACT"],
-                                                        ["EFFECT", "I will give you my opinion on an object."]]
 	
 	// PREFS
 	//[["KEY", "preference"],		["VAL", [["houseTopic","first bedroom"],["houseTopic","livingroom"]]], ["CAT","VAR"], ["ONASK",BOT_printPreferenceList]],
@@ -210,9 +207,108 @@ BOT_theBotId				= "marcBot";		// sets current bot id
 BOT_theTopicId			= "marcTopic";	// sets current topic id
 BOT_theUserTopicId	= "userTopic";	// sets topic of current user id
 
+// FUNCTIONS
+
 function BOT_onSwitchBot(oldbotid,newbotid) {
 	BOT_standardFrameBot(oldbotid, "visible", "4px solid #899DA3");
 	BOT_standardFrameBot(newbotid, "visible","4px solid #FFB030");
+}
+
+function inspect(topic, val){
+	if(BOT_theBotId=="marcBot"){
+		return inspectMarc(topic,val);
+	}
+	else if(BOT_theBotId=="aurelieBot"){
+		return inspectAurelie(topic,val);
+	}
+	else {
+		return "I don't care about specific object ! I just want to play in cool rooms.";
+	}
+}
+
+function inspectMarc(topic, val){
+	if(val == undefined){
+        return "What object are you talking about ?";
+    }
+    else{
+        var roomName = roomNumberToName[currentRoom];
+        if (roomName in marcLikes){  // the room is one of marc's favorite
+            if (val in marcLikes[roomName]){    // val is an object of the room
+                var opinionUser = BOT_get("houseTopic",val,"VAL");
+                if (opinionUser == "You didn't tell us how it looks like."){ // user has not set it
+                    return opinionUser;
+                }
+                else{ // can compare
+                    var opinionMarc = marcLikes[roomName][val];
+                    if (opinionUser == opinionMarc){
+                    	if(!objects[val]["used"]){
+                        	move("marcBar", 5);
+                        	objects[val]["used"]=true;
+                    	}
+                        return "I like it!";
+                    }
+                    else{
+                    	if(!objects[val]["used"]){
+                        	move("marcBar", -5);
+                        	return objects[val][opinionMarc]; // return something a tip about what to say
+                        }
+                        else {
+                        	return "It is ok, you told me the "+val+" is "+opinionMarc;
+                        }                        
+                    }
+                }
+            }
+            else{
+                return "I am not sure what you mean. I only want to talk about "+Object.keys(marcLikes[roomName]);
+            }
+        }
+        else{
+            return "I don't really like this room. Ask my wife.";
+        }
+    }
+}
+
+function inspectAurelie(topic, val){
+    if(val == undefined){
+        return "What object are you talking about ?";
+    }
+    else{
+        var roomName = roomNumberToName[currentRoom];
+
+        if (roomName in aurelieLikes){  // the room is one of aurelie's favorite
+            if (val in aurelieLikes[roomName]){    // val is an object of the room
+                var opinionUser = BOT_get("houseTopic",val,"VAL");
+                if (opinionUser == "You didn't tell us how it looks like."){ // user has not set it
+                    return opinionUser;
+                }
+                else{ // can compare
+                    var opinionAurelie = aurelieLikes[roomName][val];
+                    if (opinionUser == opinionAurelie){
+                    	if(!objects[val]["used"]){
+                        	move("aurelieBar", 5);
+                        	objects[val]["used"]=true;
+                    	}
+                        return "I like it!";
+                    }
+                    else{
+                    	if(!objects[val]["used"]){
+                        	move("aurelieBar", -5);
+                        	return objects[val][opinionAurelie]; // return something a tip about what to say
+                        }
+                        else {
+                        	return "It is ok, you told me the "+val+" is "+opinionAurelie;
+                        }                        
+                    }
+                }
+            }
+            else{
+                return "I am not sure what you mean. I only want to talk about "+Object.keys(aurelieLikes[roomName]);
+            }
+        }
+        else{
+            return "I don't really like this room. Ask my husband.";
+        }
+    }
 }
 
 // INTELLIGENT ON ASK
@@ -298,48 +394,6 @@ function lookAurelie(){
         return "I don't really like this room.";
     }
 }
-
-
-function inspectMarc(){
-    
-}
-
-function inspectAurelie(topic, val){
-    if(val == undefined){
-        return "You have to ask my about a specific object.";
-    }
-    else{
-        var roomName = roomNumberToName[currentRoom];
-
-        if (roomName in aurelieLikes){  // the room is one of aurelie's favorite
-            if (val in Object.keys(aurelieLikes[roomName])){    // val is an object of the room
-                var opinionUser = BOT_get("houseTopic",val,"VAL");
-                if (opinionUser == "You didn't tell us how it looks like."){ // user has not set it
-                    return opinionUser;
-                }
-                else{ // can compare
-                    var opinionAurelie = aurelieLikes[roomName][val];
-                    if (opinionUser == opinionAurelie){
-                        move("aurelieBar", 5);
-                        return "I like it!";
-                    }
-                    else{
-                        move("aurelieBar", -5);
-                        return objects[val][opinionAurelie]; // return something a tip about what to say
-                    }
-                }
-            }
-            else{
-                return "I am not sure what you mean. I only want to talk about "+Object.keys(aurelieLikes[roomName]);
-            }
-        }
-        
-        else{
-            return "I don't really like this room. Ask my husband.";
-        }
-    }
-}
-
 
 function play(){
 

@@ -1896,6 +1896,10 @@ function BOT_reqSay (success,emote,reason,arg1,arg2,arg3) {
 		short += "Fact learned";
 		long  += "Thank you, I will remember that the "+arg1+" is "+arg3;
 		break;
+	case "FACTSTORED2":
+		short += "Fact learned";
+		long  += inspect(arg2,arg1);
+		break;
 	case "BADFACTFORMAT":
 		short += "Bad fact format";
 		long  += "This command needs a fact of the form: [topic] attribute is value";
@@ -2380,7 +2384,13 @@ function BOT_onTell() {
 	// topic.attribute <- value
 	if (!BOT_reqExistAttribute(BOT_theReqAttribute))  return;
 	BOT_set(BOT_theReqTopic,BOT_theReqAttribute,"VAL",BOT_theReqValue);
-	BOT_reqSay(true,"HAPPY","FACTSTORED",BOT_theReqAttribute,BOT_theReqTopic,BOT_theReqValue);
+
+	if(BOT_theReqTopic=="houseTopic"){
+		BOT_reqSay(true,"HAPPY","FACTSTORED2",BOT_theReqAttribute,BOT_theReqTopic,BOT_theReqValue);
+	}
+	else {
+		BOT_reqSay(true,"HAPPY","FACTSTORED",BOT_theReqAttribute,BOT_theReqTopic,BOT_theReqValue);
+	}	
 }
 
 
