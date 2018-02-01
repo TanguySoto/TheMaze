@@ -1,5 +1,5 @@
 // ========= GAME parameters =========
-var timeInRooms = 500;  // s
+var timeInRooms = 5;  // s
 var currentTime;       // s
 var timerInterval;
 
@@ -42,12 +42,16 @@ marcLikes["exterior"] = {"garden": "grass", "parking" : "???", "tree" : "???", "
 //marcLikes["bedroom2"] = {"painting": "???", "desk" : "???", "bookshelf" : "???", "space" : "???"}
 
 var objects = {}
-objects["stove"] = {"induction": "I don't know... induction stove would be nice.", "electric": "I don't know... electric stove would be nice.", "used": false}
+objects["stove"] = {"induction": "I don't know... induction stove would be nice.", "electric": "I don't know... electric stove would be nice."}
 objects["garden"] = {"grass": "I don't know... grass on the floor would be nice.", "big": "I don't know... a big garden would be nice."}
 
 var jeremyLikes = {}
-marcLikes["exterior"] = true;
-marcLikes["bedroom2"] = true;
+jeremyLikes["exterior"]     = {"like":true, "used":false}
+jeremyLikes["bedroom2"]     = {"like":true, "used":false}
+jeremyLikes["bedroom1"]     = {"like":false, "used":false}
+jeremyLikes["kitchen"]      = {"like":false, "used":false}
+jeremyLikes["livingroom"]   = {"like":false, "used":false}
+jeremyLikes["bathroom"]     = {"like":false, "used":false}
 
 var marcRoomLooked  = new Array(roomsCount);
 marcRoomLooked.fill(false);
@@ -194,23 +198,33 @@ function endGame(){
   // Block input
   document.getElementById("litetalkchatbox").disabled = true;
 
-  // Won or Lost ?
-  var won = document.getElementById("goal1").checked == true;
-  won = won && document.getElementById("goal2").checked == true;
+  // Add Jeremy impact
+  var joy = BOT_get("jeremyTopic","joy","VAL");
+  move("aurelieBar", joy);
+  move("marcBar", joy);
+  BOT_reqSay(true,"","SHOWJEREMYJOY",BOT_theReqAttribute,BOT_theReqTopic,BOT_theReqValue);
+  BOT_theBotId = "jeremyBot";
+  BOT_printStandardChar();
 
-  // Message
-  var text;
-  if(won){
-    text = "You won! Play Again ?";
-  }
-  else {
-    text = "You lost! Retry ?";
-  }
+  setTimeout(function(){
+    // Won or Lost ?
+    var won = document.getElementById("goal1").checked == true;
+    won = won && document.getElementById("goal2").checked == true;
 
-  // Show dialog
-  if (confirm(text)) {
-    startGame();
-  } else {
-    // Nothing
-  }
+    // Message
+    var text;
+    if(won){
+      text = "You won! Play Again ?";
+    }
+    else {
+      text = "You lost! Retry ?";
+    }
+
+    // Show dialog
+    if (confirm(text)) {
+      startGame();
+    } else {
+      // Nothing
+    }
+  },3000);
 }

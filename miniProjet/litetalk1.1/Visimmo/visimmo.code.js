@@ -40,8 +40,8 @@ var marcTopic = [
 														["EFFECT","I will look at the elements in the room."]],
 	
 	// PREFS
-	[["KEY", "preference"],		["VAL", [["houseTopic","exterior"],["houseTopic","kitchen"],["houseTopic","first bedroom"]]], ["CAT","VAR"], ["ONASK",BOT_printPreferenceList]],  
-	[["KEY", "distaste"],			["VAL", [["houseTopic","livingroom"]]],  ["CAT","VAR"],["ONASK",BOT_printDistasteList]],
+	//[["KEY", "preference"],		["VAL", [["houseTopic","exterior"],["houseTopic","kitchen"],["houseTopic","first bedroom"]]], ["CAT","VAR"], ["ONASK",BOT_printPreferenceList]],  
+	//[["KEY", "distaste"],			["VAL", [["houseTopic","livingroom"]]],  ["CAT","VAR"],["ONASK",BOT_printDistasteList]],
 ];
 
 var aurelieTopic = [
@@ -121,22 +121,19 @@ var jeremyTopic = [
 	[["KEY", "mother"],						["VAL", "aurelieTopic"],["CAT","REL"]],
 
 	// FUNC
-	[["KEY", "action"],				["VAL", ["play","show_joy_dad","show_joy_mom"]],
-														["ONASK",BOT_printActionList]],
+	[["KEY", "action"],				["VAL", ["play","showjoy"]],
+									["ONASK",BOT_printActionList]],
 
-	[["KEY", "play"], 											["VAL", "play"], ["CAT", "ACT"],
-																					["EFFECT","I will play here and be joyful if I liked it."]],
-	[["KEY", ["showdad","show_joy_dad"]], 	["VAL", "showDad"], ["CAT", "ACT"],
-																					["EFFECT","I will tell my dad if I am joyful or not."]],
-	[["KEY", ["showmom","show_joy_mom"]], 	["VAL", "showMom"], ["CAT", "ACT"],
-																					["EFFECT","I will tell my mom if I am joyful or not."]],														
+	[["KEY", "play"], 				["VAL", "play"], ["CAT", "ACT"],
+									["EFFECT","I will play here and be joyful if I liked it."]],
+	[["KEY", "showjoy"], 	["VAL", "showJoy"], ["CAT", "ACT"],
+							["EFFECT","I will tell you if I am joyful or not."]],														
 	
 	// FEELINGS
 	[["KEY", ["joy","joyful"]],		["VAL",  0], ["CAT","VAR"], ["TYPE","INT"]], // de -10 à 10
 	
 	// PREFS
-	//[["KEY", "preference"],		["VAL", [["houseTopic","second bedroom"],["houseTopic","exterior"]]], ["CAT","VAR"], ["ONASK",BOT_printPreferenceList]],
-	//[["KEY", "distaste"],			["VAL", [["houseTopic","kitchen"],["houseTopic","bathroom"]]],  ["CAT","VAR"],["ONASK",BOT_printDistasteList]],
+	[["KEY", "preference"],		["VAL", [["houseTopic","bedroom2"],["houseTopic","exterior"]]], ["CAT","VAR"], ["ONASK",BOT_printPreferenceList]],
 ];
 
 var houseTopic = [
@@ -212,6 +209,7 @@ BOT_theUserTopicId	= "userTopic";	// sets topic of current user id
 function BOT_onSwitchBot(oldbotid,newbotid) {
 	BOT_standardFrameBot(oldbotid, "visible", "4px solid #899DA3");
 	BOT_standardFrameBot(newbotid, "visible","4px solid #FFB030");
+	document.getElementById("litetalkchatbox").focus();
 }
 
 function inspect(topic, val){
@@ -396,13 +394,59 @@ function lookAurelie(){
 }
 
 function play(){
+	var roomName = roomNumberToName[currentRoom];
+	var joy = BOT_get("jeremyTopic","joy","VAL");
 
+    // If Jeremy likes the room
+    if (jeremyLikes[roomName]['like']){
+    	if(!jeremyLikes[roomName]['used']){
+	    	joy+=5;
+	    	joy = Math.min(10,joy);
+	    	joy = Math.max(-10,joy),
+	    	BOT_set("jeremyTopic","joy","VAL",joy);
+	    	jeremyLikes[roomName]['used']=true;
+	    	return "It was cool playing here ! "+showJoy();
+    	}
+    	else {
+    		return "I already played here. It was so cool !";
+    	}
+    }
+    else {
+    	if(!jeremyLikes[roomName]['used']){
+	    	joy-=5;
+	    	joy = Math.min(10,joy);
+	    	joy = Math.max(-10,joy),
+	    	BOT_set("jeremyTopic","joy","VAL",joy);
+	    	jeremyLikes[roomName]['used']=true;
+	    	return "It hated playing here ! "+showJoy();
+	    }
+	    else {
+    		return "I already played here. It was horrible !";
+    	}
+
+    }
 }
 
-function showDad(){
-	
-}
+function showJoy(){
+	var joy = BOT_get("jeremyTopic","joy","VAL");
 
-function showMom(){
-	
+	if(joy==0){
+		return "I am neither joyful nor unhappy.";
+	}
+	else if(joy>0){
+		if(joy<10){
+			return "I am joyful but I could be more.";
+		}
+		else {
+			return "I couldn't be more joyful.";
+		}
+	}
+	else {
+		if(joy>-10){
+			return "I am not joyful, but I could be worse.";
+		}
+		else {
+			return "I couldn't be less joyful.";
+		}
+	}
 }

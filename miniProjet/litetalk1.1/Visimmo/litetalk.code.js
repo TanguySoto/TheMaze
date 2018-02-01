@@ -1722,7 +1722,11 @@ function BOT_reqSay (success,emote,reason,arg1,arg2,arg3) {
 	BOT_reqEmote   = emote;
 	var short = "";
 	var long  = "";
-	switch (reason) {  
+	switch (reason) {
+	case "SHOWJEREMYJOY":
+		short += showJoy();
+		long  += showJoy();
+		break;  
  	case "ATTRIBUTENOTFOUND": 
 		short += "Not found";
 		long  += "I found no attribute "+arg2+" for "+BOT_expressTopic(arg1); 
