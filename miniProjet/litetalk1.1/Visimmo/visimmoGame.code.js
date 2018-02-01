@@ -44,7 +44,7 @@ marcLikes["bedroom2"] = {"painting": "???", "desk" : "???", "bookshelf" : "???",
 
 
 var objects = {}
-objects["stove"] = {"induction": "I don't know... electric stove would be nice.", "electric": "I don't know... induction stove would be nice."}
+objects["stove"] = {"induction": "I don't know... induction stove would be nice.", "electric": "I don't know... electric stove would be nice."}
 
 
 var marcRoomLooked  = new Array(roomsCount);

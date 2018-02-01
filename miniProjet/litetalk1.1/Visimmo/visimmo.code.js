@@ -37,7 +37,7 @@ var marcTopic = [
 														["EFFECT","I will give you my sentiment about the house"]],
 
 	[["KEY", "look"], 				["VAL", "lookMarc"], ["CAT", "ACT"],
-														["EFFECT","I will look at the elements in the room you talked about."]],
+														["EFFECT","I will look at the elements in the room."]],
 	
 	// PREFS
 	[["KEY", "preference"],		["VAL", [["houseTopic","exterior"],["houseTopic","kitchen"],["houseTopic","first bedroom"]]], ["CAT","VAR"], ["ONASK",BOT_printPreferenceList]],  
@@ -75,14 +75,17 @@ var aurelieTopic = [
 	[["KEY", "son"],								["VAL", "jeremyTopic"],["CAT","REL"]],
 
 	// FUNC
-	[["KEY", "action"],				["VAL", ["sentiment","look"]],
+	[["KEY", "action"],				["VAL", ["sentiment","look", "inspect"]],
 														["ONASK",BOT_printActionList]],
 
 	[["KEY", "sentiment"], 		["VAL", "sentimentAurelie"], ["CAT", "ACT"],
 														["EFFECT","I will give you my sentiment about the house"]],
 
 	[["KEY", "look"], 				["VAL", "lookAurelie"], ["CAT", "ACT"],
-														["EFFECT","I will look at the elements in the room you talked about."]],
+														["EFFECT","I will look at the elements in the room."]],
+                    
+    [["KEY", "inspect"],            ["VAL", "inspectAurelie"], ["CAT", "ACT"],
+                                                        ["EFFECT", "I will give you my opinion on an object."]]
 	
 	// PREFS
 	//[["KEY", "preference"],		["VAL", [["houseTopic","first bedroom"],["houseTopic","livingroom"]]], ["CAT","VAR"], ["ONASK",BOT_printPreferenceList]],
@@ -149,7 +152,7 @@ var houseTopic = [
 	[["KEY", "name"],			["VAL", "House"], ["CAT","VAR"],
 												["WHY", "It is just a house"]],
 
-	[["KEY", "room"],			["VAL", ["bathroom","exterior","first bedroom","kitchen","livingroom","second bedroom"]],["CAT","VAR"]],["ONASK",function(){return onAskRoom()}],
+	[["KEY", "room"],			["VAL", ["bathroom","exterior","first bedroom","kitchen","livingroom","second bedroom"]],["CAT","VAR"],["ONASK",function(){return onAskRoom()}]],
 	 
 	[["KEY", "kitchen"], ["VAL", ["stove", "dishwasher", "fridge"]], ["CAT","VAR"], ["ONASK",function(){return onAskInRoom("kitchen")}]],
 	[["KEY", "livingroom"], ["VAL", ["freespace", "light", "table", "sofas","screen"]], ["CAT","VAR"], ["ONASK",function(){return onAskInRoom("livingroom")}]],
@@ -295,6 +298,48 @@ function lookAurelie(){
         return "I don't really like this room.";
     }
 }
+
+
+function inspectMarc(){
+    
+}
+
+function inspectAurelie(topic, val){
+    if(val == undefined){
+        return "You have to ask my about a specific object.";
+    }
+    else{
+        var roomName = roomNumberToName[currentRoom];
+
+        if (roomName in aurelieLikes){  // the room is one of aurelie's favorite
+            if (val in Object.keys(aurelieLikes[roomName])){    // val is an object of the room
+                var opinionUser = BOT_get("houseTopic",val,"VAL");
+                if (opinionUser == "You didn't tell us how it looks like."){ // user has not set it
+                    return opinionUser;
+                }
+                else{ // can compare
+                    var opinionAurelie = aurelieLikes[roomName][val];
+                    if (opinionUser == opinionAurelie){
+                        move("aurelieBar", 5);
+                        return "I like it!";
+                    }
+                    else{
+                        move("aurelieBar", -5);
+                        return objects[val][opinionAurelie]; // return something a tip about what to say
+                    }
+                }
+            }
+            else{
+                return "I am not sure what you mean. I only want to talk about "+Object.keys(aurelieLikes[roomName]);
+            }
+        }
+        
+        else{
+            return "I don't really like this room. Ask my husband.";
+        }
+    }
+}
+
 
 function play(){
 
